@@ -1,0 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cambria&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+
+
+.font-col{
+font-family: ui-serif,Georgia,"Times New Roman",Times,serif;
+}
