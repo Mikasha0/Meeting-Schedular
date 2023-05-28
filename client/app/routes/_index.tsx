@@ -19,8 +19,8 @@ export default function index() {
         </span>
 
         <div
-          className="bg-white rounded-lg shadow-lg p-4 mt-5" // Adjusted margin-top value
-          style={{ width: "700px" }}
+          className="bg-white rounded-lg shadow-lg p-4 mt-5"
+          style={{ maxWidth: "700px", width: "100%" }}
         >
           <h2 className="text-sm font-semibold pr-2">30 Min Meeting</h2>
           <h2 className="text-sm pr-2">A 30 minutes meeting.</h2>
@@ -35,9 +35,9 @@ export default function index() {
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="2" // Corrected property name
-                  strokeLinecap="round" // Corrected property name
-                  strokeLinejoin="round" // Corrected property name
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
                   className="h-3 w-3 stroke-[3px]"
                 >
                   <circle cx="12" cy="12" r="10"></circle>
