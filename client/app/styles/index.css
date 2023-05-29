@@ -1,11 +1,13 @@
-@import url('https://fonts.googleapis.com/css2?family=Georgia&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cambria&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans:wght@500;700;800&display=swap');
 
 .font-col{
 font-family: ui-serif,Georgia,"Times New Roman",Times,serif;
 }
-.fontSize{
-    font-size: 19px;
+.text-emphasis{
+    color:#f3f4f6;
+    font-family: 'Noto Sans', sans-serif;
+}
+.text-subtle{
+    color: #a5a5a5;
+    font-family: 'Noto Sans', sans-serif;
 }

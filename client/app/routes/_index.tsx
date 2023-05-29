@@ -7,6 +7,9 @@ export const links: LinksFunction = () => [
 ];
 
 export default function index() {
+  const handleClick = (e: any) => {
+    console.log("clicked the card");
+  };
   return (
     <>
       <main className="min-h-screen bg-black flex flex-col items-center">
@@ -14,15 +17,15 @@ export default function index() {
           <div
             className="logo-container "
             style={{
-              width: "7rem",
-              height: "7rem",
+              width: "6rem",
+              height: "6rem",
               borderRadius: "50%",
               overflow: "hidden",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
               boxShadow: "0 0 10px rgba(0.9, 0.9, 0.9, 0.9)",
-              backgroundColor: "#1c1c1c",
+              backgroundColor: "#2b2b2b",
             }}
           >
             <img
@@ -33,29 +36,33 @@ export default function index() {
           </div>
         </div>
 
-        <div className="font-col text-white text-3xl mb-1 font-bold">
+        <div className="font-col text-emphasis text-3xl mb-1 font-bold">
           Yarsa Labs
         </div>
-        <span className="text-gray-500 fontSize">
+        <p className="text-gray-500 text-subtle">
           Book your time at our Pokhara or Kathmandu offices.
-        </span>
+        </p>
 
         <div
-          className=" rounded-lg shadow-lg p-4 mt-7"
+          className=" rounded-lg shadow-lg p-4 mt-7 hover:bg-gray-900"
           style={{
-            maxWidth: "600px",
+            maxWidth: "700px",
             width: "100%",
             backgroundColor: "#1C1C1C",
           }}
+          onClick={handleClick}
         >
-          <h2 className="text-1xl font-semibold pr-2 text-white">
+          <h2 className="text-sm font-semibold pr-2 text-emphasis mt-2">
             30 Min Meeting
           </h2>
-          <h2 className="text-1xl pr-2 text-white">A 30 minutes meeting.</h2>
+          <p className="text-sm pr-2 text-subtle mt-3">A 30 minutes meeting.</p>
 
-          <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1">
+          <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1 mb-2">
             <li>
-              <div className="font-medium inline-flex items-center justify-center rounded gap-x-1 bg-subtle text-emphasis py-1 px-1.5 text-xs leading-3 text-white">
+              <div
+                className="font-medium inline-flex items-center justify-center rounded gap-x-1 bg-subtle text-emphasis py-1 px-1.5 text-xs leading-3 text-white"
+                style={{ backgroundColor: "#2b2b2b" }}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
