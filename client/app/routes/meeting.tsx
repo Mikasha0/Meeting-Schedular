@@ -1,7 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 // import { DotsVerticalIcon } from "@heroicons/react/24/outline";
 import yarsa_cube from "~/images/yarsa-cube-grey.svg";
-
+import { AiOutlineClockCircle } from "react-icons/ai";
+import { CiLocationOn } from "react-icons/ci";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { LinksFunction } from "@remix-run/node";
 import {
@@ -58,8 +59,8 @@ export default function Example() {
           maxWidth: "1000px",
           width: "100%",
           backgroundColor: "#1C1C1C",
-          boxSizing:'border-box',
-          border:'0.1px solid #e5e7eb'
+          boxSizing: "border-box",
+          border: "0.1px solid #e5e7eb",
         }}
       >
         <div className="flex flex-col md:flex-row sm:divide-x md:divide-gray-400">
@@ -74,9 +75,11 @@ export default function Example() {
             <img
               src={yarsa_cube}
               alt="yarsa_logo"
-              style={{ width: "22px", height: "22px",marginBottom:'0.5rem' }}
+              style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
             />
-            <p className="text-subtle text-sm font-semibold text-white">Yarsa Labs</p>
+            <p className="text-subtle text-sm font-semibold text-white">
+              Yarsa Labs
+            </p>
             <h1 className="text-text text-xl font-semibold my-2 text-white">
               30 Min Meeting
             </h1>
@@ -86,12 +89,15 @@ export default function Example() {
                   <p className="text-white">A 30 minutes meeting.</p>
                 </div>
               </div>
-
             </div>
-            <p className="text-white">30 mins</p>
-            <p className="text-white">2 location options</p>
-
-
+            <p className="text-white flex flex-row text-sm font-semibold">
+              <AiOutlineClockCircle size={20} className="mr-2 mt-0.5" />
+              30 mins
+            </p>
+            <p className="text-white flex flex-row text-sm font-semibold mt-4">
+              <CiLocationOn size={20} className="mr-2 mt-0.5" />2 location
+              options
+            </p>
           </section>
           <div
             className="md:pr-4 md:pl-4 pt-5 pb-3"
@@ -176,21 +182,20 @@ export default function Example() {
                     </time>
                   </button>
 
-                  <div className="w-1 h-1 mx-auto mt-1">
-                   
-                  </div>
+                  <div className="w-1 h-1 mx-auto mt-1"></div>
                 </div>
               ))}
             </div>
           </div>
           <section className="mt-12 md:mt-0 md:pl-5 pt-5 pb-5">
             <h2 className="font-semibold text-white">
-              Schedule for{" "}
               <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-                {format(selectedDay, "MMM dd, yyy")}
+                {format(selectedDay, "eee dd")}
               </time>
+
             </h2>
-            
+            <button type="button" className="text-white hover:text-white border border-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">Default</button>
+
           </section>
         </div>
       </div>
