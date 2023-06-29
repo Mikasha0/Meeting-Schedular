@@ -21,6 +21,7 @@ import {
 } from "date-fns";
 import { Fragment, useState } from "react";
 import stylesheet from "~/styles/meeting.css";
+import {GoPersonAdd} from "react-icons/go"
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -36,6 +37,7 @@ export default function Example() {
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
   const [visible, setVisible] = useState(false);
+  const [showInput, setShowInput] = useState(false);
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -232,7 +234,6 @@ export default function Example() {
                   id="first_name"
                   className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   style={{ width: "370px" }}
-                  placeholder="John"
                   required
                 />
                 <label
@@ -304,14 +305,28 @@ export default function Example() {
                   htmlFor="first_name"
                   className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Additional notes *
+                  Additional notes 
                 </label>
                 <textarea
                   id="message"
                   className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="Please share anything that will help prepare for our meeting"
                 ></textarea>
-                <div className="text-right">
+                <button
+                  type="button" onClick={()=>{setShowInput(!showInput)}}
+                  className="text-white mt-3 bg-[#1C1C1C] hover:bg-[#24292F]/90 focus:ring-4 focus:outline-none focus:ring-[#24292F]/50 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2"
+                >
+                  <GoPersonAdd size={18} className="mr-3 mt-0.5"/>
+                  Add guests
+                </button>
+                {showInput &&   <input
+                  type="text"
+                  id="small-input"
+                  className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />}
+              
+
+                <div className="text-right mt-4">
                   <button
                     type="button"
                     onClick={handleBack}
