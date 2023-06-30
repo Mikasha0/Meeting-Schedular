@@ -1,10 +1,8 @@
-import { Menu, Transition } from "@headlessui/react";
-// import { DotsVerticalIcon } from "@heroicons/react/24/outline";
 import yarsa_cube from "~/images/yarsa-cube-grey.svg";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { LinksFunction } from "@remix-run/node";
+import { ActionArgs, LinksFunction, redirect } from "@remix-run/node";
 import {
   add,
   eachDayOfInterval,
@@ -17,9 +15,13 @@ import {
   parse,
   startOfToday,
 } from "date-fns";
-import {  useState } from "react";
+import { useState } from "react";
 import stylesheet from "~/styles/meeting.css";
 import MeetingForm from "~/component/MeetingForm";
+import { getMeetingFormData } from "~/utils/formUtils";
+import { useNavigate } from "@remix-run/react";
+import { ACCEPTED_TIME, meetingSchema } from "~/types/z.schema";
+import { badRequest } from "~/utils/request.server";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -28,11 +30,33 @@ function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(" ");
 }
 
+
+export const action = async ({ request }: ActionArgs) => {
+  const form = await request.formData();
+  const { name, email, location } = getMeetingFormData(form);
+  const params = new URLSearchParams(request.url.split("?")[1]);
+  const time = params.get("time")
+  const date = params.get("date")
+  const parseResult = (meetingSchema.safeParse({time, email, date, name, location}))
+  console.log(time, date);
+  if(!parseResult.success) {
+    const fieldErrors = parseResult.error.errors.map((e)=> {return {field: e.path, message: e.message}})
+    return badRequest   ({
+      fieldErrors,
+      formError: 'Form not submitted correctly'
+    }) 
+  }  
+  return redirect("/meeting");
+};
 export default function Example() {
+  let navigate = useNavigate();
   let today = startOfToday();
+  const timeValues = Object.values(ACCEPTED_TIME)
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [visible, setVisible] = useState(false);
+
+
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   let days = eachDayOfInterval({
@@ -53,7 +77,6 @@ export default function Example() {
   const handleClick = () => {
     setVisible(!visible);
   };
-
 
   return (
     <div className="min-h-screen bg-black pt-12">
@@ -148,7 +171,9 @@ export default function Example() {
                   >
                     <button
                       type="button"
-                      onClick={() => setSelectedDay(day)}
+                      onClick={() => {
+                        setSelectedDay(day)
+                       }}
                       className={classNames(
                         isEqual(day, selectedDay) && "text-white",
                         !isEqual(day, selectedDay) &&
@@ -168,10 +193,10 @@ export default function Example() {
                           "text-gray-900",
                         isEqual(day, selectedDay) &&
                           isToday(day) &&
-                          "bg-white text-red-500",
+                          "bg-white text-red-600",
                         isEqual(day, selectedDay) &&
                           !isToday(day) &&
-                          "bg-white text-blue-700",
+                          "bg-white text-blue-800",
                         !isEqual(day, selectedDay) &&
                           "button-background hover:bg-white",
                         (isEqual(day, selectedDay) || isToday(day)) &&
@@ -197,7 +222,28 @@ export default function Example() {
                   {format(selectedDay, "eee dd")}
                 </time>
               </h2>
-              <button
+              {timeValues.map((time) => (
+            <button
+              key={time}
+              type="button"
+              className="text-white hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
+              style={{ width: "235px" }}
+              onClick={() => {
+                console.log(days)
+                const year = selectedDay.getFullYear().toString()
+                const month = (selectedDay.getMonth() + 1).toString()
+                const day1 = selectedDay.getDate()
+                const date = year + '/' + month + '/' + day1
+
+                navigate(`/meeting/?time=${time}&date=${date}`)
+                setVisible(!visible)
+                // Handle button click event here
+              }}
+            >
+              {time}
+            </button>
+          ))}
+              {/* <button
                 type="button"
                 onClick={handleClick}
                 className="text-white hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
@@ -211,12 +257,11 @@ export default function Example() {
                 style={{ width: "235px" }}
               >
                 11:00
-              </button>
+              </button> */}
+
             </section>
           )}
-          {visible && (
-            <MeetingForm handleClick={handleClick}/>
-          )}
+          {visible && <MeetingForm handleClick={handleClick} />}
         </div>
       </div>
     </div>
