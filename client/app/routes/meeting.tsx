@@ -193,10 +193,10 @@ export default function Example() {
                           "text-gray-900",
                         isEqual(day, selectedDay) &&
                           isToday(day) &&
-                          "bg-white text-red-600",
+                          "bg-white text-red-700",
                         isEqual(day, selectedDay) &&
                           !isToday(day) &&
-                          "bg-white text-blue-800",
+                          "bg-white text-blue-700",
                         !isEqual(day, selectedDay) &&
                           "button-background hover:bg-white",
                         (isEqual(day, selectedDay) || isToday(day)) &&
