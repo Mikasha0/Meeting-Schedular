@@ -112,19 +112,19 @@ export default function Meeting() {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-12">
+    <div className="min-h-screen bg-[#f3f4f6] pt-12">
       <div
-        className={`max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6 rounded-lg border border-gray-300 ${
+        className={`max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6 rounded-lg  ${
           visible === true ? "default-width" : "toggled-width"
-        }`}
+        }`} 
       >
-        <div className="flex flex-col md:flex-row sm:divide-x md:divide-gray-400">
+        <div className="flex flex-col md:flex-row sm:divide-x ">
           <section
             className="mt-12 md:mt-0 md:mr-3 pt-5"
             style={{
               maxWidth: "250px",
               width: "100%",
-              backgroundColor: "#1C1C1C",
+              backgroundColor: "#fff",
             }}
           >
             <img
@@ -132,24 +132,24 @@ export default function Meeting() {
               alt="yarsa_logo"
               style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
             />
-            <p className="text-subtle text-sm font-semibold text-white">
+            <p className="text-subtle text-sm font-semibold text-black">
               Yarsa Labs
             </p>
-            <h1 className="text-text text-xl font-semibold my-2 text-white">
+            <h1 className="text-text text-xl font-semibold my-2 text-black">
               30 Min Meeting
             </h1>
             <div className="flex items-start justify-start text-sm text-text">
               <div className="relative z-10 mb-8 break-words max-w-full max-h-[180px] scroll-bar pr-4">
                 <div>
-                  <p className="text-white">A 30 minutes meeting.</p>
+                  <p className="text-black">A 30 minutes meeting.</p>
                 </div>
               </div>
             </div>
-            <p className="text-white flex flex-row text-sm font-semibold">
+            <p className="text-black flex flex-row text-sm font-semibold">
               <AiOutlineClockCircle size={20} className="mr-2 mt-0.5" />
               30 mins
             </p>
-            <p className="text-white flex flex-row text-sm font-semibold mt-4">
+            <p className="text-black flex flex-row text-sm font-semibold mt-4">
               <CiLocationOn size={20} className="mr-2 mt-0.5" />2 location
               options
             </p>
@@ -160,11 +160,11 @@ export default function Meeting() {
               style={{
                 maxWidth: "430px",
                 width: "100%",
-                backgroundColor: "#1C1C1C",
+                backgroundColor: "#fff",
               }}
             >
               <div className="flex items-center">
-                <h2 className="flex-auto font-semibold text-white">
+                <h2 className="flex-auto font-semibold text-black">
                   {format(firstDayCurrentMonth, "MMMM yyyy")}
                 </h2>
                 <button
@@ -184,7 +184,7 @@ export default function Meeting() {
                   <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
                 </button>
               </div>
-              <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-white">
+              <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-black">
                 <div>SUN</div>
                 <div>MON</div>
                 <div>TUE</div>
@@ -209,13 +209,13 @@ export default function Meeting() {
                        }}
                       className={classNames(
                         isEqual(day, selectedDay) && "text-white",
-                        !isEqual(day, selectedDay) &&
+                        !isEqual(day, selectedDay) && //todays date 
                           isToday(day) &&
-                          "text-white",
+                          "text-black",
                         !isEqual(day, selectedDay) &&
                           !isToday(day) &&
                           isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-white",
+                          "text-black",
                         isEqual(day, selectedDay) &&
                           isToday(day) &&
                           isSameMonth(day, firstDayCurrentMonth) &&
@@ -224,12 +224,12 @@ export default function Meeting() {
                           !isToday(day) &&
                           !isSameMonth(day, firstDayCurrentMonth) &&
                           "text-gray-900",
-                        isEqual(day, selectedDay) &&
+                        isEqual(day, selectedDay) && //todays date shower
                           isToday(day) &&
-                          "bg-white text-red-600",
+                          "bg-black text-black",
                         isEqual(day, selectedDay) &&
                           !isToday(day) &&
-                          "bg-white text-blue-800",
+                          "bg-black text-white",
                         !isEqual(day, selectedDay) &&
                           "button-background hover:bg-white",
                         (isEqual(day, selectedDay) || isToday(day)) &&
@@ -250,7 +250,7 @@ export default function Meeting() {
           )}
           {!visible && (
             <section className="mt-12 md:mt-0 md:pl-8 pt-5 pb-5">
-              <h2 className="font-semibold text-white">
+              <h2 className="font-semibold text-black">
                 <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
                   {format(selectedDay, "eee dd")}
                 </time>
@@ -259,7 +259,7 @@ export default function Meeting() {
             <button
               key={time}
               type="button"
-              className="text-white hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
+              className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
               style={{ width: "235px" }}
               onClick={() => {
                 console.log(days)
