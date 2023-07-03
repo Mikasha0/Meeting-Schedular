@@ -21,11 +21,11 @@ export enum MeetingLocations {
     'Yarsa Labs Office, Pokhara' = 'Yarsa Labs Office, Pokhara'
 }
 export const meetingSchema = z.object({
-    name: z.string().min(1),
+    name: z.string().min(1).regex(/^[^\d]*$/),
     email: z.string().email({"message": "Invalid email"}),
     date: z.string(),
     time: z.nativeEnum(ACCEPTED_TIME),
     location: z.nativeEnum(MeetingLocations),
-    notes: z.string().optional(),
-    guests: z.array(z.string().email()).optional()
+    notes: z.string().optional().nullable(),
+    guests: z.array(z.string().email()).optional().nullable()
 })

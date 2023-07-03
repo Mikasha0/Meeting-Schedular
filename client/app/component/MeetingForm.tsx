@@ -117,6 +117,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
           </label>
           <textarea
             id="message"
+            name="notes"
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Please share anything that will help prepare for our meeting"
           ></textarea>
@@ -135,6 +136,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
               <div className="relative flex items-center">
                 <input
                   type="text"
+                  name="guest-email"
                   id="email-input"
                   className="block  p-2 pr-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   style={{ width: "370px" }}

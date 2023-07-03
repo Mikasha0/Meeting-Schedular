@@ -1,14 +1,16 @@
 import type { LinksFunction } from "@remix-run/node";
 import yarsa_cube from "~/images/yarsa-cube-grey.svg";
 import stylesheet from "~/styles/index.css";
+import { useActionData, useNavigate } from "@remix-run/react";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
 
 export default function index() {
+  let navigate = useNavigate();
   const handleClick = (e: any) => {
-    console.log("clicked the card");
+    navigate('/meeting');
   };
   return (
     <>

@@ -35,7 +35,8 @@ function classNames(...classes: (string | boolean)[]) {
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
-  const { name, email, location } = getMeetingFormData(form);
+  const { name, email, location,notes, guests } = getMeetingFormData(form);
+  console.log(name, email, location, notes, guests);
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time")
   const date = params.get("date")
@@ -66,7 +67,7 @@ export const action = async ({ request }: ActionArgs) => {
 //     formError: null,
 //   });
 // }
-  const parseResult = (meetingSchema.safeParse({time, email, date, name, location}))
+  const parseResult = (meetingSchema.safeParse({time, email, date, name, location,notes,guests}))
   if (!parseResult.success) {
     const fieldErrors = parseResult.error.format()
     console.log(fieldErrors)
@@ -77,13 +78,12 @@ export const action = async ({ request }: ActionArgs) => {
     });
     }
 
-  return redirect("/meeting");
+  return redirect("/booking");
 };
 export default function Meeting() {
   let navigate = useNavigate();
   let today = startOfToday();
   const actionData = useActionData<typeof action>();
-  console.log(actionData)
   const timeValues = Object.values(ACCEPTED_TIME)
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -226,10 +226,10 @@ export default function Meeting() {
                           "text-gray-900",
                         isEqual(day, selectedDay) &&
                           isToday(day) &&
-                          "bg-white text-red-700",
+                          "bg-white text-red-600",
                         isEqual(day, selectedDay) &&
                           !isToday(day) &&
-                          "bg-white text-blue-700",
+                          "bg-white text-blue-800",
                         !isEqual(day, selectedDay) &&
                           "button-background hover:bg-white",
                         (isEqual(day, selectedDay) || isToday(day)) &&
