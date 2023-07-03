@@ -57,7 +57,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
                 >
                   {actionData.fieldErrors.email._errors[0]}
                 </p>
-              ) : "Hello World"}
+              ) : null}
           <label
             htmlFor="first_name"
             className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -74,7 +74,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
             />
             <label
               htmlFor="country-option-1"
-              className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block ml-2 text-sm  text-gray-900 dark:text-gray-300"
             >
               Cal Video
             </label>
@@ -89,7 +89,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
             />
             <label
               htmlFor="country-option-1"
-              className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
             >
               Yarsa Labs Office, Kathmandu
             </label>
@@ -104,7 +104,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
             />
             <label
               htmlFor="country-option-1"
-              className="block ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
             >
               Yarsa Labs Office, Pokhara
             </label>
@@ -126,7 +126,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
             onClick={() => {
               setShowInput(!showInput);
             }}
-            className="text-white mt-3 bg-[#1C1C1C] hover:bg-[#24292F]/90  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2"
+            className="text-black mt-3 bg-white hover:bg-[#e5e4e6]/90  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2"
           >
             <GoPersonAdd size={18} className="mr-3 mt-0.5" />
             Add guests

@@ -11,9 +11,13 @@
 }
 
 .toggled-width {
-    max-width: 1000px;
+    max-width: 1050px;
     width: 100%;
     background-color: #fff;
     box-sizing: border-box;
     border: 1px solid #e5e7eb;
+}
+.button-size{
+    width: 3.5rem;
+    height: 3.5rem;
 }

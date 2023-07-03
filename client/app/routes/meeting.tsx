@@ -112,7 +112,7 @@ export default function Meeting() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f3f4f6] pt-12">
+    <div className="min-h-screen bg-[#f3f4f6] pt-8">
       <div
         className={`max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6 rounded-lg  ${
           visible === true ? "default-width" : "toggled-width"
@@ -158,7 +158,7 @@ export default function Meeting() {
             <div
               className="md:pr-4 md:pl-4 pt-5 pb-3"
               style={{
-                maxWidth: "430px",
+                maxWidth: "480px",
                 width: "100%",
                 backgroundColor: "#fff",
               }}
@@ -211,7 +211,7 @@ export default function Meeting() {
                         isEqual(day, selectedDay) && "text-white",
                         !isEqual(day, selectedDay) && //todays date 
                           isToday(day) &&
-                          "text-black",
+                          "text-red-400",
                         !isEqual(day, selectedDay) &&
                           !isToday(day) &&
                           isSameMonth(day, firstDayCurrentMonth) &&
@@ -234,7 +234,7 @@ export default function Meeting() {
                           "button-background hover:bg-white",
                         (isEqual(day, selectedDay) || isToday(day)) &&
                           "font-semibold",
-                        "mx-auto flex h-12 w-12 items-center justify-center rounded-lg"
+                        "mx-auto flex button-size items-center justify-center rounded-lg "
                       )}
                     >
                       <time dateTime={format(day, "yyyy-MM-dd")}>
@@ -242,7 +242,7 @@ export default function Meeting() {
                       </time>
                     </button>
 
-                    <div className="w-1 h-1 mx-auto mt-1"></div>
+                    <div className="w-1 h-1 mx-auto mt-0.5"></div>
                   </div>
                 ))}
               </div>
@@ -259,7 +259,7 @@ export default function Meeting() {
             <button
               key={time}
               type="button"
-              className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
+              className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
               style={{ width: "235px" }}
               onClick={() => {
                 console.log(days)
