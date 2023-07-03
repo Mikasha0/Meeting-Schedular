@@ -2,9 +2,10 @@ import { useState } from "react";
 import { GoPersonAdd } from "react-icons/go";
 import { Form } from "@remix-run/react";
 
-export default function MeetingForm({ handleClick }: any) {
+export default function MeetingForm({ handleClick, actionData }: any) {
   const [showInput, setShowInput] = useState(false);
-
+  console.log(JSON.stringify(actionData))
+  console.log("Hello World")
   return (
     <section className="mt-12 md:mt-0 md:pl-6 pt-5 pb-5">
       <Form method="post">
@@ -20,8 +21,19 @@ export default function MeetingForm({ handleClick }: any) {
             name="name"
             className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             style={{ width: "370px" }}
+            defaultValue={actionData?.fields?.name}
             required
           />
+           {actionData?.fieldErrors?.name ? (
+                <p
+                  className="form-validation-error"
+                  style={{ color: "red" }}
+                  role="alert"
+                  id="name-error"
+                >
+                  {actionData.fieldErrors.name._errors[0]}
+                </p>
+              ) : null}
           <label
             htmlFor="first_name"
             className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -33,7 +45,19 @@ export default function MeetingForm({ handleClick }: any) {
             name="email"
             id="small-input"
             className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            defaultValue={actionData?.fields?.email}
+            required
           />
+           {actionData?.fieldErrors?.email ? (
+                <p
+                  className="form-validation-error"
+                  style={{ color: "red" }}
+                  role="alert"
+                  id="name-error"
+                >
+                  {actionData.fieldErrors.email._errors[0]}
+                </p>
+              ) : "Hello World"}
           <label
             htmlFor="first_name"
             className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"

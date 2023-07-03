@@ -19,8 +19,10 @@ import { useState } from "react";
 import stylesheet from "~/styles/meeting.css";
 import MeetingForm from "~/component/MeetingForm";
 import { getMeetingFormData } from "~/utils/formUtils";
-import { useNavigate } from "@remix-run/react";
+import { useActionData, useNavigate } from "@remix-run/react";
 import { ACCEPTED_TIME, meetingSchema } from "~/types/z.schema";
+import { validateMeetingForm } from "~/utils/validators";
+
 import { badRequest } from "~/utils/request.server";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -37,20 +39,51 @@ export const action = async ({ request }: ActionArgs) => {
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time")
   const date = params.get("date")
+//   const fieldErrors = validateMeetingForm(name, location, email);
+//   console.log(fieldErrors)
+//   const hasErrors = !Object.values(fieldErrors).every(
+//     (value) => value === undefined
+//   );
+  
+//   if (hasErrors) {
+//     return badRequest({
+//       fieldErrors,
+//       fields: null,
+//       formError: "Form not submitted correctly",
+//     });
+//   }
+//   const fields= {
+//       name,
+//       email,
+//       location,
+  
+//     };
+
+// if (Object.values(fieldErrors).some(Boolean)) {
+//   return badRequest({
+//     fieldErrors,
+//     fields,
+//     formError: null,
+//   });
+// }
   const parseResult = (meetingSchema.safeParse({time, email, date, name, location}))
-  console.log(time, date);
-  if(!parseResult.success) {
-    const fieldErrors = parseResult.error.errors.map((e)=> {return {field: e.path, message: e.message}})
-    return badRequest   ({
+  if (!parseResult.success) {
+    const fieldErrors = parseResult.error.format()
+    console.log(fieldErrors)
+    return badRequest({
       fieldErrors,
+      fields: null,
       formError: 'Form not submitted correctly'
-    }) 
-  }  
+    });
+    }
+
   return redirect("/meeting");
 };
-export default function Example() {
+export default function Meeting() {
   let navigate = useNavigate();
   let today = startOfToday();
+  const actionData = useActionData<typeof action>();
+  console.log(actionData)
   const timeValues = Object.values(ACCEPTED_TIME)
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -261,7 +294,7 @@ export default function Example() {
 
             </section>
           )}
-          {visible && <MeetingForm handleClick={handleClick} />}
+          {visible && <MeetingForm handleClick={handleClick} actionData={actionData}/>}
         </div>
       </div>
     </div>
@@ -277,3 +310,5 @@ let colStartClasses = [
   "col-start-6",
   "col-start-7",
 ];
+
+
