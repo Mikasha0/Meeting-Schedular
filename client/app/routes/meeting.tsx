@@ -39,6 +39,7 @@ export const action = async ({ request }: ActionArgs) => {
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
+  console.log(date);
   const parseResult = meetingSchema.safeParse({
     time,
     email,
@@ -199,57 +200,63 @@ export default function Meeting() {
                 <div>SAT</div>
               </div>
               <div className="grid grid-cols-7 mt-2 text-sm">
-                {days.map((day, dayIdx) => (
-                  <div
-                    key={day.toString()}
-                    className={classNames(
-                      dayIdx === 0 && colStartClasses[getDay(day)],
-                      "px-0"
-                    )}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setSelectedDay(day);
-                      }}
+                {days.map((day, dayIdx) => {
+                  const isSaturday = getDay(day) === 6; // 6 represents Saturday
+                  const isSunday = getDay(day) === 0; // 0 represents Sunday
+
+                  return (
+                    <div
+                      key={day.toString()}
                       className={classNames(
-                        isEqual(day, selectedDay) && "text-white",
-                        !isEqual(day, selectedDay) && //todays date
-                          isToday(day) &&
-                          "text-red-400",
-                        !isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-black",
-                        isEqual(day, selectedDay) &&
-                          isToday(day) &&
-                          isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-black",
-                        !isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          !isSameMonth(day, firstDayCurrentMonth) &&
-                          "text-gray-900",
-                        isEqual(day, selectedDay) && //todays date shower
-                          isToday(day) &&
-                          "bg-black text-black",
-                        isEqual(day, selectedDay) &&
-                          !isToday(day) &&
-                          "bg-black text-white",
-                        !isEqual(day, selectedDay) &&
-                          "button-background hover:bg-white",
-                        (isEqual(day, selectedDay) || isToday(day)) &&
-                          "font-semibold",
-                        "mx-auto flex button-size items-center justify-center rounded-lg "
+                        dayIdx === 0 && colStartClasses[getDay(day)],
+                        "px-0"
                       )}
                     >
-                      <time dateTime={format(day, "yyyy-MM-dd")}>
-                        {format(day, "d")}
-                      </time>
-                    </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setSelectedDay(day);
+                        }}
+                        className={classNames(
+                          isEqual(day, selectedDay) && "text-white",
+                          !isEqual(day, selectedDay) &&
+                            isToday(day) &&
+                            "text-red-400",
+                          !isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-black",
+                          isEqual(day, selectedDay) &&
+                            isToday(day) &&
+                            isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-black",
+                          !isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            !isSameMonth(day, firstDayCurrentMonth) &&
+                            "text-gray-900",
+                          isEqual(day, selectedDay) &&
+                            isToday(day) &&
+                            "bg-black text-black",
+                          isEqual(day, selectedDay) &&
+                            !isToday(day) &&
+                            "bg-black text-white",
+                          !isEqual(day, selectedDay) &&
+                            "button-background hover:bg-white",
+                          (isEqual(day, selectedDay) || isToday(day)) &&
+                            "font-semibold",
+                          "mx-auto flex button-size items-center justify-center rounded-lg",
+                          (isSaturday || isSunday) && "pointer-events-none button-background-disabled" // Disable Saturdays and Sundays
+                        )}
+                      >
+                        <time dateTime={format(day, "yyyy-MM-dd")}>
+                          {format(day, "d")}
+                        </time>
+                      </button>
 
-                    <div className="w-1 h-1 mx-auto mt-0.5"></div>
-                  </div>
-                ))}
+                      <div className="w-1 h-1 mx-auto mt-0.5"></div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
@@ -269,7 +276,6 @@ export default function Meeting() {
                   onClick={() => {
                     const currentDate = startOfToday(); // Get the current date
                     const selectedDate = new Date(selectedDay); // Convert the selectedDay to a Date object
-
                     if (selectedDate < currentDate) {
                       console.log("Error: Selected date is in the past");
                       navigate("/error");
