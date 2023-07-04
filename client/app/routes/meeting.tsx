@@ -61,17 +61,14 @@ export const action = async ({ request }: ActionArgs) => {
 
   const API_URL = "http://localhost:3333/api/meeting";
   const req = {
-    "name": "John Doe",
-    "email": "johndoe@gmail.com",
-    "location": "Yarsa Meet",
-    "notes": "notes",
-    "guests": [
-      "user1@gmail.com",
-      "user2@gmail.com"
-    ],
-    "time": "11:00",
-    "date": "2023/07/11"
-  }
+    name: "John Doe",
+    email: "johndoe@gmail.com",
+    location: "Yarsa Meet",
+    notes: "notes",
+    guests: ["user1@gmail.com", "user2@gmail.com"],
+    time: "11:00",
+    date: "2023/07/11",
+  };
   try {
     const response = await fetch(API_URL, {
       method: "POST",
@@ -91,6 +88,7 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Meeting() {
   let navigate = useNavigate();
   let today = startOfToday();
+  console.log(today);
   const actionData = useActionData<typeof action>();
   const timeValues = Object.values(ACCEPTED_TIME);
   let [selectedDay, setSelectedDay] = useState(today);
@@ -263,52 +261,35 @@ export default function Meeting() {
                 </time>
               </h2>
               {timeValues.map((time) => (
-         <button
-         key={time}
-         type="button"
-         className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
-         style={{ width: "235px" }}
-         onClick={() => {
-           const currentDate = new Date(); // Get the current date
-           const selectedDate = new Date(selectedDay); // Convert the selectedDay to a Date object
-       
-           // Compare the selected date with the current date
-           if (selectedDate < currentDate) {
-             // Show an error message or handle the error condition here
-             console.log("Error: Selected date is in the past");
-             return;
-           }
-       
-           console.log(days);
-           const year = selectedDay.getFullYear().toString();
-           const month = (selectedDay.getMonth() + 1).toString();
-           const day1 = selectedDay.getDate();
-           const date = year + "/" + month + "/" + day1;
-       
-           navigate(`/meeting/?time=${time}&date=${date}`);
-           setVisible(!visible);
-           // Handle button click event here
-         }}
-       >
-         {time}
-       </button>
-       
+                <button
+                  key={time}
+                  type="button"
+                  className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
+                  style={{ width: "235px" }}
+                  onClick={() => {
+                    const currentDate = startOfToday(); // Get the current date
+                    const selectedDate = new Date(selectedDay); // Convert the selectedDay to a Date object
+
+                    if (selectedDate < currentDate) {
+                      console.log("Error: Selected date is in the past");
+                      navigate("/error");
+                      return;
+                    }
+
+                    console.log(days);
+                    const year = selectedDay.getFullYear().toString();
+                    const month = (selectedDay.getMonth() + 1).toString();
+                    const day1 = selectedDay.getDate();
+                    const date = year + "/" + month + "/" + day1;
+
+                    navigate(`/meeting/?time=${time}&date=${date}`);
+                    setVisible(!visible);
+                    // Handle button click event here
+                  }}
+                >
+                  {time}
+                </button>
               ))}
-              {/* <button
-                type="button"
-                onClick={handleClick}
-                className="text-white hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
-                style={{ width: "235px" }}
-              >
-                10:30
-              </button>
-              <button
-                type="button"
-                className="text-white hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2 mt-3"
-                style={{ width: "235px" }}
-              >
-                11:00
-              </button> */}
             </section>
           )}
           {visible && (
