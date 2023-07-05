@@ -1,4 +1,7 @@
 import { z } from "zod";
+export const Weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const
+
+z.enum(Weekday)
 
 export enum ACCEPTED_TIME {
     "10:30" = "10:30am",
@@ -20,6 +23,7 @@ export enum MeetingLocations {
     'Yarsa Labs Office, Kathmandu' = 'Yarsa Labs Office, Kathmandu',
     'Yarsa Labs Office, Pokhara' = 'Yarsa Labs Office, Pokhara'
 }
+
 export const meetingSchema = z.object({
     name: z.string().min(1).regex(/^[^\d]*$/),
     email: z.string().email({"message": "Invalid email"}),

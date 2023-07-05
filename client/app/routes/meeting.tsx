@@ -20,9 +20,7 @@ import stylesheet from "~/styles/meeting.css";
 import MeetingForm from "~/component/MeetingForm";
 import { getMeetingFormData } from "~/utils/formUtils";
 import { useActionData, useNavigate } from "@remix-run/react";
-import { ACCEPTED_TIME, meetingSchema } from "~/types/z.schema";
-import { validateMeetingForm } from "~/utils/validators";
-
+import { ACCEPTED_TIME, meetingSchema, Weekday } from "~/types/z.schema";
 import { badRequest } from "~/utils/request.server";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -34,6 +32,7 @@ function classNames(...classes: (string | boolean)[]) {
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
+  console.log(form);
   const { name, email, location, notes, guests } = getMeetingFormData(form);
   console.log(name, email, location, notes, guests);
   const params = new URLSearchParams(request.url.split("?")[1]);
@@ -191,13 +190,9 @@ export default function Meeting() {
                 </button>
               </div>
               <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-black">
-                <div>SUN</div>
-                <div>MON</div>
-                <div>TUE</div>
-                <div>WED</div>
-                <div>THU</div>
-                <div>FRI</div>
-                <div>SAT</div>
+              {Object.values(Weekday).map((day)=>(
+                <div key={day}>{day}</div>
+              ))}
               </div>
               <div className="grid grid-cols-7 mt-2 text-sm">
                 {days.map((day, dayIdx) => {
