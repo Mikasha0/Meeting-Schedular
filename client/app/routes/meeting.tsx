@@ -134,7 +134,7 @@ export default function Meeting() {
   };
 
   const handleShow = () => {
-    setVisible(!visible);
+    setShowDate(!showDate);
     console.log("first");
   };
 
@@ -146,7 +146,7 @@ export default function Meeting() {
         }`}
       >
         <div className="flex flex-col md:flex-row sm:divide-x ">
-          <DateShow data={data} visible={visible} />
+          <DateShow data={data} showDate={showDate} handleShow={handleShow}/>
           {!visible && (
             <div
               className="md:pr-4 md:pl-4 pt-5 pb-3"
@@ -246,6 +246,7 @@ export default function Meeting() {
 
                     navigate(`/meeting/?time=${time}&date=${date}`);
                     setVisible(!visible);
+                    setShowDate(!showDate);
                     // Handle button click event here
                   }}
                 >

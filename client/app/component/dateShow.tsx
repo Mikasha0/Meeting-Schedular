@@ -2,7 +2,7 @@ import yarsa_cube from "~/images/yarsa-cube-grey.svg";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 
-export default function DateShow({data, visible}:any) {
+export default function DateShow({data, showDate}:any) {
   return (
     <section
     className="mt-12 md:mt-0 md:mr-3 pt-5"
@@ -30,7 +30,7 @@ export default function DateShow({data, visible}:any) {
         </div>
       </div>
     </div>
-    {visible && (
+    {showDate && (
       <div className="relative z-10 max-w-full break-words mb-3 text-sm">
         {data.formattedDate}
         <br />

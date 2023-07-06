@@ -17,8 +17,8 @@ export const loader = async() =>{
     email: "anikettamrakar0@gmail.com",
     location:"Yarsa Labs Office"
   }])
-
 }
+
 export default function booking() {
   const data = useLoaderData<typeof loader>();
   const navigate = useNavigate();
@@ -26,7 +26,6 @@ export default function booking() {
     navigate(`/meeting/?reschedule=${id}`);
   }
  
-
   return (
     <div className="min-h-screen bg-[#f3f4f6] pt-8 mb-3">
       <div
