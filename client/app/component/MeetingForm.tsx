@@ -4,8 +4,6 @@ import { Form } from "@remix-run/react";
 
 export default function MeetingForm({ handleClick, actionData }: any) {
   const [showInput, setShowInput] = useState(false);
-  console.log(JSON.stringify(actionData))
-  console.log("Hello World")
   return (
     <section className="mt-12 md:mt-0 md:pl-6 pt-5 pb-5">
       <Form method="post">

@@ -1,13 +1,5 @@
-import yarsa_cube from "~/images/yarsa-cube-grey.svg";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { CiLocationOn } from "react-icons/ci";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import {
-  ActionArgs,
-  LinksFunction,
-  LoaderArgs,
-  json,
-} from "@remix-run/node";
+import { ActionArgs, LinksFunction, LoaderArgs, json } from "@remix-run/node";
 import {
   add,
   eachDayOfInterval,
@@ -27,6 +19,8 @@ import { getMeetingFormData } from "~/utils/formUtils";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import { ACCEPTED_TIME, meetingSchema, Weekday } from "~/types/z.schema";
 import { badRequest } from "~/utils/request.server";
+import DateShow from "~/component/dateShow";
+import CalendarButton from "~/component/CalendarButton";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -115,6 +109,7 @@ export default function Meeting() {
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [visible, setVisible] = useState(false);
+  const [showDate, setShowDate] = useState(false);
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
@@ -135,6 +130,12 @@ export default function Meeting() {
 
   const handleClick = () => {
     setVisible(!visible);
+    console.log("first");
+  };
+
+  const handleShow = () => {
+    setVisible(!visible);
+    console.log("first");
   };
 
   return (
@@ -145,51 +146,7 @@ export default function Meeting() {
         }`}
       >
         <div className="flex flex-col md:flex-row sm:divide-x ">
-          <section
-            className="mt-12 md:mt-0 md:mr-3 pt-5"
-            style={{
-              maxWidth: "250px",
-              width: "100%",
-              backgroundColor: "#fff",
-            }}
-          >
-            <img
-              src={yarsa_cube}
-              alt="yarsa_logo"
-              style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
-            />
-            <p className="text-subtle text-sm font-semibold text-black">
-              Yarsa Labs
-            </p>
-            <h1 className="text-text text-xl font-semibold my-2 text-black">
-              30 Min Meeting
-            </h1>
-            <div className="flex items-start justify-start text-sm text-text">
-              <div className="relative z-10 mb-8 break-words max-w-full max-h-[180px] scroll-bar pr-4">
-                <div>
-                  <p className="text-black">A 30 minutes meeting.</p>
-                </div>
-              </div>
-            </div>
-            {visible &&
-                 <div className="relative z-10 max-w-full break-words mb-3 text-sm">
-                 {data.formattedDate}
-                 <br />
-                 {data.time}
-   
-                 {/* 12:00am – 12:30am */}
-               </div>
-            }
-         
-            <p className="text-black flex flex-row text-sm ">
-              <AiOutlineClockCircle size={20} className="mr-2 mt-0.5" />
-              30 mins
-            </p>
-            <p className="text-black flex flex-row text-sm  mt-4">
-              <CiLocationOn size={20} className="mr-2 mt-0.5" />2 location
-              options
-            </p>
-          </section>
+          <DateShow data={data} visible={visible} />
           {!visible && (
             <div
               className="md:pr-4 md:pl-4 pt-5 pb-3"
@@ -238,47 +195,19 @@ export default function Meeting() {
                         "px-0"
                       )}
                     >
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setSelectedDay(day);
-                        }}
-                        className={classNames(
-                          isEqual(day, selectedDay) && "text-white",
-                          !isEqual(day, selectedDay) &&
-                            isToday(day) &&
-                            "text-red-400",
-                          !isEqual(day, selectedDay) &&
-                            !isToday(day) &&
-                            isSameMonth(day, firstDayCurrentMonth) &&
-                            "text-black",
-                          isEqual(day, selectedDay) &&
-                            isToday(day) &&
-                            isSameMonth(day, firstDayCurrentMonth) &&
-                            "text-black",
-                          !isEqual(day, selectedDay) &&
-                            !isToday(day) &&
-                            !isSameMonth(day, firstDayCurrentMonth) &&
-                            "text-gray-900",
-                          isEqual(day, selectedDay) &&
-                            isToday(day) &&
-                            "bg-black text-black",
-                          isEqual(day, selectedDay) &&
-                            !isToday(day) &&
-                            "bg-black text-white",
-                          !isEqual(day, selectedDay) &&
-                            "button-background hover:bg-white",
-                          (isEqual(day, selectedDay) || isToday(day)) &&
-                            "font-semibold",
-                          "mx-auto flex button-size items-center justify-center rounded-lg",
-                          (isSaturday || isSunday) &&
-                            "pointer-events-none button-background-disabled" // Disable Saturdays and Sundays
-                        )}
-                      >
-                        <time dateTime={format(day, "yyyy-MM-dd")}>
-                          {format(day, "d")}
-                        </time>
-                      </button>
+                      <CalendarButton
+                        isEqual={isEqual}
+                        isToday={isToday}
+                        day={day}
+                        selectedDay={selectedDay}
+                        setSelectedDay={setSelectedDay}
+                        firstDayCurrentMonth={firstDayCurrentMonth}
+                        isSameMonth={isSameMonth}
+                        isSaturday={isSaturday}
+                        isSunday={isSunday}
+                        format={format}
+                        classNames={classNames}
+                      />
 
                       <div className="w-1 h-1 mx-auto mt-0.5"></div>
                     </div>

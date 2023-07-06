@@ -22,6 +22,10 @@ export const loader = async() =>{
 export default function booking() {
   const data = useLoaderData<typeof loader>();
   const navigate = useNavigate();
+  const handleNavigateToMeeting = (id:any) =>{
+    navigate(`/meeting/?reschedule=${id}`);
+  }
+ 
 
   return (
     <div className="min-h-screen bg-[#f3f4f6] pt-8 mb-3">
@@ -87,8 +91,7 @@ export default function booking() {
         <button
           className="underline"
           style={{ marginRight: "5px" }}
-          onClick={()=>navigate(`/meeting/?reschedule=${datas.id}`)}
-        >
+          onClick={() => handleNavigateToMeeting(datas.id)}        >
           Reschedule
         </button>
         or
