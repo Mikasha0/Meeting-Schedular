@@ -2,7 +2,12 @@ import yarsa_cube from "~/images/yarsa-cube-grey.svg";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { ActionArgs, LinksFunction, redirect } from "@remix-run/node";
+import {
+  ActionArgs,
+  LinksFunction,
+  LoaderArgs,
+  json,
+} from "@remix-run/node";
 import {
   add,
   eachDayOfInterval,
@@ -19,7 +24,7 @@ import { useState } from "react";
 import stylesheet from "~/styles/meeting.css";
 import MeetingForm from "~/component/MeetingForm";
 import { getMeetingFormData } from "~/utils/formUtils";
-import { useActionData, useNavigate } from "@remix-run/react";
+import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import { ACCEPTED_TIME, meetingSchema, Weekday } from "~/types/z.schema";
 import { badRequest } from "~/utils/request.server";
 export const links: LinksFunction = () => [
@@ -29,6 +34,22 @@ export const links: LinksFunction = () => [
 function classNames(...classes: (string | boolean)[]) {
   return classes.filter(Boolean).join(" ");
 }
+
+export const loader = async ({ request }: LoaderArgs) => {
+  const url = new URL(request.url);
+  const rescheduleId = url.searchParams.get("reschedule");
+  const time = url.searchParams.get("time");
+  const date = url.searchParams.get("date") ?? new Date();
+  console.log(time);
+  const formattedDate = new Date(date).toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  return json({ formattedDate, time });
+};
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
@@ -88,7 +109,7 @@ export const action = async ({ request }: ActionArgs) => {
 export default function Meeting() {
   let navigate = useNavigate();
   let today = startOfToday();
-  console.log(today);
+  const data = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const timeValues = Object.values(ACCEPTED_TIME);
   let [selectedDay, setSelectedDay] = useState(today);
@@ -150,11 +171,21 @@ export default function Meeting() {
                 </div>
               </div>
             </div>
-            <p className="text-black flex flex-row text-sm font-semibold">
+            {visible &&
+                 <div className="relative z-10 max-w-full break-words mb-3 text-sm">
+                 {data.formattedDate}
+                 <br />
+                 {data.time}
+   
+                 {/* 12:00am – 12:30am */}
+               </div>
+            }
+         
+            <p className="text-black flex flex-row text-sm ">
               <AiOutlineClockCircle size={20} className="mr-2 mt-0.5" />
               30 mins
             </p>
-            <p className="text-black flex flex-row text-sm font-semibold mt-4">
+            <p className="text-black flex flex-row text-sm  mt-4">
               <CiLocationOn size={20} className="mr-2 mt-0.5" />2 location
               options
             </p>
@@ -190,9 +221,9 @@ export default function Meeting() {
                 </button>
               </div>
               <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-black">
-              {Object.values(Weekday).map((day)=>(
-                <div key={day}>{day}</div>
-              ))}
+                {Object.values(Weekday).map((day) => (
+                  <div key={day}>{day}</div>
+                ))}
               </div>
               <div className="grid grid-cols-7 mt-2 text-sm">
                 {days.map((day, dayIdx) => {
@@ -240,7 +271,8 @@ export default function Meeting() {
                           (isEqual(day, selectedDay) || isToday(day)) &&
                             "font-semibold",
                           "mx-auto flex button-size items-center justify-center rounded-lg",
-                          (isSaturday || isSunday) && "pointer-events-none button-background-disabled" // Disable Saturdays and Sundays
+                          (isSaturday || isSunday) &&
+                            "pointer-events-none button-background-disabled" // Disable Saturdays and Sundays
                         )}
                       >
                         <time dateTime={format(day, "yyyy-MM-dd")}>
