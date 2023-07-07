@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { ActionArgs, LinksFunction, LoaderArgs, json } from "@remix-run/node";
+import { ActionArgs, LinksFunction, LoaderArgs, json, redirect } from "@remix-run/node";
 import {
   add,
   eachDayOfInterval,
@@ -19,7 +19,7 @@ import { getMeetingFormData } from "~/utils/formUtils";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import { ACCEPTED_TIME, meetingSchema, Weekday } from "~/types/z.schema";
 import { badRequest } from "~/utils/request.server";
-import DateShow from "~/component/dateShow";
+import DateShow from "~/component/DateShow";
 import CalendarButton from "~/component/CalendarButton";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -32,6 +32,12 @@ function classNames(...classes: (string | boolean)[]) {
 export const loader = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
   const rescheduleId = url.searchParams.get("reschedule");
+  if(rescheduleId) {
+    const res = await fetch(`http://localhost:3333/api/meeting/${rescheduleId}`)   
+    console.log(await res.json())
+    return await res.json();
+  }
+
   const time = url.searchParams.get("time");
   const date = url.searchParams.get("date") ?? new Date();
   console.log(time);
@@ -60,7 +66,7 @@ export const action = async ({ request }: ActionArgs) => {
     date,
     name,
     location,
-    notes,
+    notes:notes === '' ? null : notes,
     guests,
   });
 
@@ -74,30 +80,28 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
-  const API_URL = "http://localhost:3333/api/meeting";
-  const req = {
-    name: "John Doe",
-    email: "johndoe@gmail.com",
-    location: "Yarsa Meet",
-    notes: "notes",
-    guests: ["user1@gmail.com", "user2@gmail.com"],
-    time: "11:00",
-    date: "2023/07/11",
-  };
+  const API_URL = 'http://localhost:3333/api/meeting';
+
   try {
     const response = await fetch(API_URL, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(parseResult.data),
     });
-    console.log(await response.json());
+    
+    const responseData = await response.json();
+    console.log(responseData);
+    
+    
+    return redirect('/booking');
   } catch (error) {
     // Handle any exceptions during the API request
-    console.log("API request error:", error);
-    return new Response("API request error", { status: 500 });
+    console.log('API request error:', error);
+    return new Response('API request error', { status: 500 });
   }
+  
 };
 
 export default function Meeting() {
@@ -133,10 +137,6 @@ export default function Meeting() {
     console.log("first");
   };
 
-  const handleShow = () => {
-    setShowDate(!showDate);
-    console.log("first");
-  };
 
   return (
     <div className="min-h-screen bg-[#f3f4f6] pt-8">
@@ -146,7 +146,7 @@ export default function Meeting() {
         }`}
       >
         <div className="flex flex-col md:flex-row sm:divide-x ">
-          <DateShow data={data} showDate={showDate} handleShow={handleShow}/>
+          <DateShow data={data} visible={visible} handleClick={handleClick}/>
           {!visible && (
             <div
               className="md:pr-4 md:pl-4 pt-5 pb-3"
@@ -232,7 +232,7 @@ export default function Meeting() {
                   onClick={() => {
                     const currentDate = startOfToday(); // Get the current date
                     const selectedDate = new Date(selectedDay); // Convert the selectedDay to a Date object
-                    if (selectedDate < currentDate) {
+                    if (selectedDate <= currentDate) {
                       console.log("Error: Selected date is in the past");
                       navigate("/error");
                       return;
@@ -246,7 +246,6 @@ export default function Meeting() {
 
                     navigate(`/meeting/?time=${time}&date=${date}`);
                     setVisible(!visible);
-                    setShowDate(!showDate);
                     // Handle button click event here
                   }}
                 >

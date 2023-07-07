@@ -4,8 +4,8 @@ export const Weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as cons
 z.enum(Weekday)
 
 export enum ACCEPTED_TIME {
-    "10:30" = "10:30am",
-    "11:00" = "11:00am",
+    "10:30" = "10:30",
+    "11:00" = "11:00",
     // "11:30" = "11:30",
     // "12:00" = "12:00",
     // "12:30" = "12:30",
