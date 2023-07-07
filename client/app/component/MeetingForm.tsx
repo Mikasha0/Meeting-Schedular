@@ -74,7 +74,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
               htmlFor="country-option-1"
               className="block ml-2 text-sm  text-gray-900 dark:text-gray-300"
             >
-              Cal Video
+              Video Call (Virtual Meeting)
             </label>
           </div>
           <div className="flex items-center mb-2">
@@ -89,7 +89,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
               htmlFor="country-option-1"
               className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
             >
-              Yarsa Labs Office, Kathmandu
+              YLO, Kathmandu (Physical Visit)
             </label>
           </div>
           <div className="flex items-center mb-4">
@@ -104,7 +104,7 @@ export default function MeetingForm({ handleClick, actionData }: any) {
               htmlFor="country-option-1"
               className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
             >
-              Yarsa Labs Office, Pokhara
+              YLO, Pokhara (Physical Visit)
             </label>
           </div>
           <label
