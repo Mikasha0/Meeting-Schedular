@@ -14,7 +14,7 @@ export default function Booking({ data }: any) {
       style={{
         maxWidth: "550px",
         backgroundColor: "#fff",
-        fontFamily: "Noto Sans, sans-serif", // Add your desired font here
+        fontFamily: "Noto Sans, sans-serif", 
 
       }}>
         {data.map((datas: any) => (

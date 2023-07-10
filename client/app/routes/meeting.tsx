@@ -91,10 +91,7 @@ export const action = async ({ request }: ActionArgs) => {
       body: JSON.stringify(parseResult.data),
     });
     
-    const responseData = await response.json();
-    console.log(responseData);
-    
-    
+    await response.json(); 
     return redirect('/booking');
   } catch (error) {
     // Handle any exceptions during the API request
