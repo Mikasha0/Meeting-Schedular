@@ -91,8 +91,8 @@ export const action = async ({ request }: ActionArgs) => {
       body: JSON.stringify(parseResult.data),
     });
     
-    await response.json(); 
-    return redirect('/booking');
+    const data =await response.json(); 
+    return redirect(`/booking/?bookingId=${data.id}`);
   } catch (error) {
     // Handle any exceptions during the API request
     console.log('API request error:', error);
@@ -102,12 +102,15 @@ export const action = async ({ request }: ActionArgs) => {
 };
 
 export default function Meeting() {
+
   let navigate = useNavigate();
   let today = startOfToday();
   const data = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const timeValues = Object.values(ACCEPTED_TIME);
   let [selectedDay, setSelectedDay] = useState(today);
+  // let [defaultDay, setDefaultDay] = useState(today);
+  // selectedDay.setDate(today.getDate() + 1);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [visible, setVisible] = useState(false);
   const [showDate, setShowDate] = useState(false);
@@ -227,19 +230,28 @@ export default function Meeting() {
                   className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
                   style={{ width: "235px" }}
                   onClick={() => {
-                    const currentDate = startOfToday(); // Get the current date
-                    const selectedDate = new Date(selectedDay); // Convert the selectedDay to a Date object
+                    const currentDate = startOfToday(); 
+                    let selectedDate = new Date(selectedDay); 
+                    const year = selectedDay.getFullYear().toString();
+                    const month = (selectedDay.getMonth() + 1).toString();
+                    const day1 = selectedDay.getDate();
+                    const nextDay = selectedDay.setDate(day1 + 1);
+                    console.log(nextDay);
+                    const date = year + "/" + month + "/" + day1;
+                    const date2 = year + "/" + month + "/" + nextDay;
+                    console.log(selectedDate)
                     if (selectedDate <= currentDate) {
+                      
                       console.log("Error: Selected date is in the past");
                       navigate("/error");
                       return;
                     }
-
+                    else if (selectedDate = currentDate){
+                      navigate(`/meeting/?time=${time}&date=${date2}`);
+                    }
                     console.log(days);
-                    const year = selectedDay.getFullYear().toString();
-                    const month = (selectedDay.getMonth() + 1).toString();
-                    const day1 = selectedDay.getDate();
-                    const date = year + "/" + month + "/" + day1;
+
+             
 
                     navigate(`/meeting/?time=${time}&date=${date}`);
                     setVisible(!visible);
