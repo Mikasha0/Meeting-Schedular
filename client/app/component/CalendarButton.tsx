@@ -43,7 +43,7 @@ export default function CalendarButton({
         "mx-auto flex button-size items-center justify-center rounded-lg",
         (isSaturday || isSunday) &&
           "pointer-events-none button-background-disabled", // Disable Saturdays and Sundays except for the current date
-        day < currentDate &&
+        day <= currentDate &&
           !isToday(day) &&
           "pointer-events-none button-background-disabled", // Disable past dates except for the current date
       )}

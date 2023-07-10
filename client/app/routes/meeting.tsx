@@ -1,5 +1,11 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { ActionArgs, LinksFunction, LoaderArgs, json, redirect } from "@remix-run/node";
+import {
+  ActionArgs,
+  LinksFunction,
+  LoaderArgs,
+  json,
+  redirect,
+} from "@remix-run/node";
 import {
   add,
   eachDayOfInterval,
@@ -11,10 +17,12 @@ import {
   isToday,
   parse,
   startOfToday,
-  parseISO
+  parseISO,
 } from "date-fns";
-import { useState } from "react";
 import stylesheet from "~/styles/meeting.css";
+import { useState } from "react";
+import { GoPersonAdd } from "react-icons/go";
+import { Form } from "@remix-run/react";
 import MeetingForm from "~/component/MeetingForm";
 import { getMeetingFormData } from "~/utils/formUtils";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
@@ -36,9 +44,11 @@ function classNames(...classes: (string | boolean)[]) {
 export const loader = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
   const rescheduleId = url.searchParams.get("reschedule");
-  
+
   if (rescheduleId) {
-    const res = await fetch(`http://localhost:3333/api/meeting/${rescheduleId}`);
+    const res = await fetch(
+      `http://localhost:3333/api/meeting/${rescheduleId}`
+    );
     const data = await res.json();
     console.log(data);
     return data;
@@ -72,7 +82,7 @@ export const action = async ({ request }: ActionArgs) => {
     date,
     name,
     location,
-    notes:notes === '' ? null : notes,
+    notes: notes === "" ? null : notes,
     guests,
   });
 
@@ -86,27 +96,28 @@ export const action = async ({ request }: ActionArgs) => {
     });
   }
 
-  const API_URL = 'http://localhost:3333/api/meeting';
+  const API_URL = "http://localhost:3333/api/meeting";
 
   try {
     const response = await fetch(API_URL, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(parseResult.data),
     });
-    
-    const data =await response.json(); 
+
+    const data = await response.json();
     return redirect(`/booking/?bookingId=${data.id}`);
   } catch (error) {
     // Handle any exceptions during the API request
-    console.log('API request error:', error);
-    return new Response('API request error', { status: 500 });
+    console.log("API request error:", error);
+    return new Response("API request error", { status: 500 });
   }
 };
 
 export default function Meeting() {
+  const [showInput, setShowInput] = useState(false);
 
   let navigate = useNavigate();
   let today = startOfToday();
@@ -140,7 +151,6 @@ export default function Meeting() {
     console.log("first");
   };
 
-
   return (
     <div className="min-h-screen bg-[#f3f4f6] pt-8">
       <div
@@ -149,49 +159,54 @@ export default function Meeting() {
         }`}
       >
         <div className="flex flex-col md:flex-row sm:divide-x ">
-        <section
-      className="mt-12 md:mt-0 md:mr-3 pt-5"
-      style={{
-        maxWidth: "250px",
-        width: "100%",
-        backgroundColor: "#fff",
-      }}
-    >
-      <img
-        src={yarsa_cube}
-        alt="yarsa_logo"
-        style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
-      />
-      <p className="text-subtle text-sm font-semibold text-black">Yarsa Labs</p>
-      <h1 className="text-text text-xl font-semibold my-2 text-black">
-        30 Min Meeting
-      </h1>
-      <div className="flex items-start justify-start text-sm text-text">
-        <div className="relative z-10 mb-8 break-words max-w-full max-h-[180px] scroll-bar pr-4">
-          <div>
-            <p className="text-black">A 30 minutes meeting.</p>
-          </div>
-        </div>
-      </div>
-      {data.start?format(parseISO(data.start), 'EEEE, MMMM d, yyyy'):""}
-      {}
-      {visible && (
-        <div className="relative z-10 max-w-full break-words mb-3 text-sm">
-          {data.formattedDate}
-          <br />
-          {data.time}
-          {/* 12:00am – 12:30am */}
-        </div>
-      )}
+          <section
+            className="mt-12 md:mt-0 md:mr-3 pt-5"
+            style={{
+              maxWidth: "250px",
+              width: "100%",
+              backgroundColor: "#fff",
+            }}
+          >
+            <img
+              src={yarsa_cube}
+              alt="yarsa_logo"
+              style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
+            />
+            <p className="text-subtle text-sm font-semibold text-black">
+              Yarsa Labs
+            </p>
+            <h1 className="text-text text-xl font-semibold my-2 text-black">
+              30 Min Meeting
+            </h1>
+            <div className="flex items-start justify-start text-sm text-text">
+              <div className="relative z-10 mb-8 break-words max-w-full max-h-[180px] scroll-bar pr-4">
+                <div>
+                  <p className="text-black">A 30 minutes meeting.</p>
+                </div>
+              </div>
+            </div>
+            {data.start
+              ? format(parseISO(data.start), "EEEE, MMMM d, yyyy")
+              : ""}
+            {}
+            {visible && (
+              <div className="relative z-10 max-w-full break-words mb-3 text-sm">
+                {data.formattedDate}
+                <br />
+                {data.time}
+                {/* 12:00am – 12:30am */}
+              </div>
+            )}
 
-      <p className="text-black flex flex-row text-sm ">
-        <AiOutlineClockCircle size={20} className="mr-2 mt-0.5" />
-        30 mins
-      </p>
-      <p className="text-black flex flex-row text-sm  mt-4">
-        <CiLocationOn size={20} className="mr-2 mt-0.5" />2 location options
-      </p>
-    </section>
+            <p className="text-black flex flex-row text-sm ">
+              <AiOutlineClockCircle size={20} className="mr-2 mt-0.5" />
+              30 mins
+            </p>
+            <p className="text-black flex flex-row text-sm  mt-4">
+              <CiLocationOn size={20} className="mr-2 mt-0.5" />2 location
+              options
+            </p>
+          </section>
           {!visible && (
             <div
               className="md:pr-4 md:pl-4 pt-5 pb-3"
@@ -275,32 +290,26 @@ export default function Meeting() {
                   className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
                   style={{ width: "235px" }}
                   onClick={() => {
-                    const currentDate = startOfToday(); 
-                    let selectedDate = new Date(selectedDay); 
+                    const currentDate = startOfToday();
+                    let selectedDate = new Date(selectedDay);
                     const year = selectedDay.getFullYear().toString();
                     const month = (selectedDay.getMonth() + 1).toString();
                     const day1 = selectedDay.getDate();
-                    const nextDay = selectedDay.setDate(day1 + 1);
-                    console.log(nextDay);
                     const date = year + "/" + month + "/" + day1;
-                    const date2 = year + "/" + month + "/" + nextDay;
-                    console.log(selectedDate)
-                    if (selectedDate <= currentDate) {
-                      
+                    if (data.id) {
+                      console.log(data.id);
+                      navigate(
+                        `/meeting/?${data.id}/&time=${time}&date=${date}`
+                      );
+                      setVisible(!visible);
+                    } else if (selectedDate <= currentDate) {
                       console.log("Error: Selected date is in the past");
                       navigate("/error");
                       return;
+                    } else {
+                      navigate(`/meeting/?time=${time}&date=${date}`);
+                      setVisible(!visible);
                     }
-                    else if (selectedDate = currentDate){
-                      navigate(`/meeting/?time=${time}&date=${date2}`);
-                    }
-                    console.log(days);
-
-             
-
-                    navigate(`/meeting/?time=${time}&date=${date}`);
-                    setVisible(!visible);
-                    // Handle button click event here
                   }}
                 >
                   {time}
@@ -309,7 +318,177 @@ export default function Meeting() {
             </section>
           )}
           {visible && (
-            <MeetingForm handleClick={handleClick} actionData={actionData} />
+            <section className="mt-12 md:mt-0 md:pl-6 pt-5 pb-5">
+              <Form method="post">
+                <div>
+                  <label
+                    htmlFor="first_name"
+                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Your name *
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    style={{ width: "370px" }}
+                    defaultValue={actionData?.fields?.name || data.name}
+                    required
+                  />
+                  {actionData?.fieldErrors?.name ? (
+                    <p
+                      className="form-validation-error"
+                      style={{ color: "red" }}
+                      role="alert"
+                      id="name-error"
+                    >
+                      {actionData.fieldErrors.name._errors[0]}
+                    </p>
+                  ) : null}
+                  <label
+                    htmlFor="first_name"
+                    className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Email address *
+                  </label>
+                  <input
+                    type="text"
+                    name="email"
+                    id="small-input"
+                    className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    defaultValue={actionData?.fields?.email || data.email}
+                    required
+                  />
+                  {actionData?.fieldErrors?.email ? (
+                    <p
+                      className="form-validation-error"
+                      style={{ color: "red" }}
+                      role="alert"
+                      id="name-error"
+                    >
+                      {actionData.fieldErrors.email._errors[0]}
+                    </p>
+                  ) : null}
+                  <label
+                    htmlFor="first_name"
+                    className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Location
+                  </label>
+                  <div className="flex items-center mb-2">
+                    <input
+                      id="country-option-1"
+                      type="radio"
+                      name="location"
+                      value="Yarsa Meet"
+                      className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="country-option-1"
+                      className="block ml-2 text-sm  text-gray-900 dark:text-gray-300"
+                    >
+                      Video Call (Virtual Meeting)
+                    </label>
+                  </div>
+                  <div className="flex items-center mb-2">
+                    <input
+                      id="country-option-1"
+                      type="radio"
+                      name="location"
+                      value="Yarsa Meet"
+                      className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="country-option-1"
+                      className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
+                    >
+                      YLO, Kathmandu (Physical Visit)
+                    </label>
+                  </div>
+                  <div className="flex items-center mb-4">
+                    <input
+                      id="country-option-1"
+                      type="radio"
+                      name="location"
+                      value="Yarsa Meet"
+                      className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label
+                      htmlFor="country-option-1"
+                      className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
+                    >
+                      YLO, Pokhara (Physical Visit)
+                    </label>
+                  </div>
+                  <label
+                    htmlFor="first_name"
+                    className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >
+                    Additional notes
+                  </label>
+                  <textarea
+                    id="message"
+                    name="notes"
+                    className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Please share anything that will help prepare for our meeting"
+                  ></textarea>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setShowInput(!showInput);
+                    }}
+                    className="text-black mt-3 bg-white hover:bg-[#e5e4e6]/90  font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 dark:hover:bg-[#050708]/30 mr-2 mb-2"
+                  >
+                    <GoPersonAdd size={18} className="mr-3 mt-0.5" />
+                    Add guests
+                  </button>
+                  {showInput && (
+                    <div className="flex items-center">
+                      <div className="relative flex items-center">
+                        <input
+                          type="text"
+                          name="guest-email"
+                          id="email-input"
+                          className="block  p-2 pr-10 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          style={{ width: "370px" }}
+                          placeholder="E-mail"
+                        />
+                        <button className="absolute top-1/2 right-2 transform -translate-y-1/2 text-gray-500 focus:outline-none">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              stroke-width="2"
+                              d="M6 18L18 6M6 6l12 12"
+                            ></path>
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                  <div className="text-right mt-4">
+                    <button
+                      type="button"
+                      onClick={handleClick}
+                      className="text-white mt-4 bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+                    >
+                      Back
+                    </button>
+                    <button
+                      type="submit"
+                      className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-400 hover:text-white focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-white dark:text-black dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                    >
+                      Confirm
+                    </button>
+                  </div>
+                </div>
+              </Form>
+            </section>
           )}
         </div>
       </div>
