@@ -16,7 +16,6 @@ export const loader = async({request, params}:LoaderArgs) =>{
 
 export default function booking() {
   const data = useLoaderData<typeof loader>();
-  console.log(data)
 
   return (
     <Booking data={data}/>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Input-Validation</title>
+</head>
+
+<body>
+    <form id="form">
+        <input type="text" name="text1" />
+        <input type="text" name="text2" />
+        <input type="text" name="text3" />
+        <input type="checkbox" name="check" checked disabled />
+        <button name="intent" id="save" value="save">Save</button>
+        <button name="intent" value="saveAsCopy">Save As Copy</button>
+    </form>
+
+    <output id="output"></output>
+    <div id="error-message"></div>
+
+    <script>
+        const form = document.getElementById("form");
+        const submit = document.getElementById("save");
+        const output = document.getElementById("output");
+        const errorMessage = document.getElementById("error-message");
+
+        submit.addEventListener("click", validate);
+
+        function validate(e) {
+            e.preventDefault();
+            const formdata = new FormData(form);
+            const text1 = formdata.get("text1");
+            const text2 = formdata.get("text2");
+
+            const validateText1 = (text1) => {
+                if (!text1) {
+                    return "text1 should not be empty";
+                }
+                return "";
+            }
+            const validateText2 = (text2) => {
+                if (!text2) {
+                    return "text2 should not be empty";
+                }
+                return "";
+            }
+
+            let errors = {};
+            errors.text1 = validateText1(text1);
+            errors.text2 = validateText2(text2);
+            console.log(errors);
+
+            displayErrors(errors);
+            console.log(text1, text2);
+        }
+
+        function displayErrors(errors) {
+            // Clear previous error messages
+            errorMessage.innerHTML = "";
+
+            for (const field in errors) {
+                if (errors[field]) {
+                    const errorElement = document.createElement("p");
+                    errorElement.classList.add("form-validation-error");
+                    errorElement.textContent = errors[field];
+                    form.querySelector(`input[name=${field}]`).insertAdjacentElement("afterend", errorElement);
+                }
+            }
+        }
+    </script>
+
+</body>
+
+</html>

@@ -29,3 +29,15 @@ body{
     width: 3.5rem;
     height: 3.5rem;
 }
+.text-with-line:before {
+    content: "";
+    position: absolute;
+    bottom: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: black;
+  }
+  .line-cut{
+    text-decoration: line-through;
+  }

@@ -33,6 +33,7 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import DateShow from "~/component/DateShow";
 import CalendarButton from "~/component/CalendarButton";
+import { BsCalendarDate } from "react-icons/bs";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -44,16 +45,6 @@ function classNames(...classes: (string | boolean)[]) {
 export const loader = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
   const rescheduleId = url.searchParams.get("reschedule");
-
-  if (rescheduleId) {
-    const res = await fetch(
-      `http://localhost:3333/api/meeting/${rescheduleId}`
-    );
-    const data = await res.json();
-    console.log(data);
-    return data;
-  }
-
   const time = url.searchParams.get("time");
   const date = url.searchParams.get("date") ?? new Date();
   console.log(time);
@@ -63,15 +54,31 @@ export const loader = async ({ request }: LoaderArgs) => {
     day: "numeric",
     year: "numeric",
   });
+  if (rescheduleId) {
+    const res = await fetch(
+      `http://localhost:3333/api/meeting/${rescheduleId}`
+    );
+    const newFormattedDate = new Date(date).toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+    });
+    const data = await res.json();
+    
+    console.log(data);
+    console.log(newFormattedDate);
+    return {...data, newFormattedDate};
+  }
+
+
 
   return json({ formattedDate, time });
 };
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
-  console.log(form);
   const { name, email, location, notes, guests } = getMeetingFormData(form);
-  console.log(name, email, location, notes, guests);
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
@@ -185,16 +192,25 @@ export default function Meeting() {
                 </div>
               </div>
             </div>
-            {data.start
-              ? format(parseISO(data.start), "EEEE, MMMM d, yyyy")
-              : ""}
-            {}
-            {visible && (
-              <div className="relative z-10 max-w-full break-words mb-3 text-sm">
-                {data.formattedDate}
+            {data.start ? (
+              <div className="relative z-10 max-w-full break-words mb-3 text-sm flex line-cut">
+                <BsCalendarDate size={18} className="mr-2 " />{" "}
+                {format(parseISO(data.start), "EEE, MMMM d, yyyy")}
                 <br />
-                {data.time}
-                {/* 12:00am – 12:30am */}
+                {/* {data.time} */}
+                12:00am – 12:30am
+              </div>
+            ) : (
+              ""
+            )}
+        
+            {visible && (
+              <div className="relative z-10 max-w-full break-words mb-3 text-sm flex">
+                <BsCalendarDate size={18} className="mr-2 " />{" "}
+                {data.newFormattedDate?data.newFormattedDate:data.formattedDate}
+                <br />
+                {/* {data.time} */}
+                12:00am – 12:30amm
               </div>
             )}
 
@@ -299,7 +315,7 @@ export default function Meeting() {
                     if (data.id) {
                       console.log(data.id);
                       navigate(
-                        `/meeting/?${data.id}/&time=${time}&date=${date}`
+                        `/meeting/?reschedule=${data.id}/&time=${time}&date=${date}`
                       );
                       setVisible(!visible);
                     } else if (selectedDate <= currentDate) {
@@ -333,7 +349,6 @@ export default function Meeting() {
                     className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     style={{ width: "370px" }}
                     defaultValue={actionData?.fields?.name || data.name}
-                    readOnly={!data.name}
                     required
                   />
                   {actionData?.fieldErrors?.name ? (
@@ -358,8 +373,7 @@ export default function Meeting() {
                     id="small-input"
                     className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     defaultValue={actionData?.fields?.email || data.email}
-                    readOnly={!data.name}
-
+                    readOnly={data.name ? true : false}
                     required
                   />
                   {actionData?.fieldErrors?.email ? (
@@ -486,7 +500,7 @@ export default function Meeting() {
                       type="submit"
                       className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-400 hover:text-white focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-white dark:text-black dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
                     >
-                      Confirm
+                      {data.id?"Reschedule":"Confirm"}
                     </button>
                   </div>
                 </div>

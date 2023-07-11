@@ -36,7 +36,7 @@ export default function CalendarButton({
           !isToday(day) &&
           !isSameMonth(day, firstDayCurrentMonth) &&
           "text-gray-900",
-        isEqual(day, selectedDay) && isToday(day) && " text-red-600",
+        isEqual(day, selectedDay) && isToday(day) && " bg-black text-red-600",
         isEqual(day, selectedDay) && !isToday(day) && "bg-black text-white",
         !isEqual(day, selectedDay) && "button-background hover:bg-white",
         (isEqual(day, selectedDay) || isToday(day)) && "font-semibold",
