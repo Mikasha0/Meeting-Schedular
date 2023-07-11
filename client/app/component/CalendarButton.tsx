@@ -12,11 +12,13 @@ export default function CalendarButton({
   format,
   classNames,
 }: any) {
+
   const currentDate = startOfToday();
   console.log(currentDate);
   const nextDay = startOfToday();
   nextDay.setDate(day.getDate() + 3);
-
+  
+  
   return (
     <button
       type="button"

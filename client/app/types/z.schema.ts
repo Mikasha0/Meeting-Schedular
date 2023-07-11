@@ -1,8 +1,9 @@
-import { z } from "zod";
+import { Schema, z } from "zod";
 export const Weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const
 
 z.enum(Weekday)
 
+export const holidays = ["SAT", "SUN"]
 export enum ACCEPTED_TIME {
     "10:30" = "10:30",
     "11:00" = "11:00",
@@ -31,5 +32,7 @@ export const meetingSchema = z.object({
     time: z.nativeEnum(ACCEPTED_TIME),
     location: z.nativeEnum(MeetingLocations),
     notes: z.string().optional().nullable(),
-    guests: z.array(z.string().email()).optional().nullable()
+    guests: z.array(z.string().email({"message":"Invalid email"})).optional().nullable()
+}).refine((schema)=> {
+    return (schema.guests?.includes(schema.email), {message: 'Hi bro'})
 })

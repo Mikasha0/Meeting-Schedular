@@ -2,7 +2,7 @@ import { LoaderArgs, json } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react';
 import Booking from '~/component/Booking'
 
-export const loader = async({request, params}:LoaderArgs) =>{
+export const loader = async({request}:LoaderArgs) =>{
  const url = new URL(request.url);
  console.log(url);
   const bookingID = url.searchParams.get("bookingId");
