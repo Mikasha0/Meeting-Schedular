@@ -6,6 +6,7 @@ import {
   json,
   redirect,
 } from "@remix-run/node";
+import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import {
   add,
   eachDayOfInterval,
@@ -17,24 +18,16 @@ import {
   isToday,
   parse,
   startOfToday,
-  parseISO,
 } from "date-fns";
-import stylesheet from "~/styles/meeting.css";
 import { useState } from "react";
-import { GoPersonAdd } from "react-icons/go";
-import { Form } from "@remix-run/react";
-import MeetingForm from "~/component/MeetingForm";
-import { getMeetingFormData } from "~/utils/formUtils";
-import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
-import { ACCEPTED_TIME, meetingSchema, Weekday } from "~/types/z.schema";
-import { badRequest } from "~/utils/request.server";
-import yarsa_cube from "~/images/yarsa-cube-grey.svg";
-import { AiOutlineClockCircle } from "react-icons/ai";
-import { CiLocationOn } from "react-icons/ci";
-import DateShow from "~/component/DateShow";
 import CalendarButton from "~/component/CalendarButton";
-import { BsCalendarDate } from "react-icons/bs";
+import DateShow from "~/component/DateShow";
+import MeetingForm from "~/component/MeetingForm";
 import MeetingTimes from "~/component/MeetingTimes";
+import stylesheet from "~/styles/meeting.css";
+import { ACCEPTED_TIME, CreateMeetingDto, Weekday, meetingSchemaObj } from "~/types/z.schema";
+import { getMeetingFormData } from "~/utils/formUtils";
+import { badRequest } from "~/utils/request.server";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -78,7 +71,7 @@ export const action = async ({ request }: ActionArgs) => {
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
-  const parseResult = meetingSchema.safeParse({
+  const parseResult = meetingSchemaObj.safeParse({
     time,
     email,
     date,
@@ -126,9 +119,10 @@ export default function Meeting() {
 
   let navigate = useNavigate();
   let today = startOfToday();
-  const data = useLoaderData<typeof loader>();
+  const data:CreateMeetingDto = useLoaderData<typeof loader>();
   console.log(data);
   const actionData = useActionData<typeof action>();
+  console.log(actionData);
   const timeValues = Object.values(ACCEPTED_TIME);
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
@@ -153,14 +147,14 @@ export default function Meeting() {
     setCurrentMonth(format(firstDayNextMonth, "MMM-yyyy"));
   }
 
-  const handleClick = () => {
+  const toggleVisibility = () => {
     setVisible(!visible);
-    console.log("first");
   };
 
-  const handleRadioChange = (event: any) => {
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedLocation(event.target.value);
   };
+  
 
   return (
     <div className="min-h-screen bg-[#f3f4f6] pt-8">
@@ -252,11 +246,12 @@ export default function Meeting() {
           )}
           {visible && (
             <MeetingForm
-              handleClick={handleClick}
+              toggleVisibility={toggleVisibility}
               actionData={actionData}
               data={data}
               handleRadioChange={handleRadioChange}
               selectedLocation={selectedLocation}
+
             />
           )}
         </div>

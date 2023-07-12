@@ -1,4 +1,5 @@
-import { Schema, z } from "zod";
+import { createZodDto } from "nestjs-zod";
+import { z } from "zod";
 export const Weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const
 
 z.enum(Weekday)
@@ -18,6 +19,13 @@ export enum ACCEPTED_TIME {
     // "03:30" = "03:30"
 }
 
+export  const EventActions = {
+    CREATE: "notes",
+    RESCHEDULE: "reason",
+    CREATE_NOTES:"Confirm",
+    RESCHEDULE_REASON:"Reschedule"
+  };
+
 
 export enum MeetingLocations {
     'Yarsa Meet'= 'Yarsa Meet',
@@ -25,7 +33,7 @@ export enum MeetingLocations {
     'Yarsa Labs Office, Pokhara' = 'Yarsa Labs Office, Pokhara'
 }
 
-export const meetingSchema = z.object({
+export const meetingSchemaObj = z.object({
     name: z.string().min(1).regex(/^[^\d]*$/),
     email: z.string().email({"message": "Invalid email"}),
     date: z.string(),
@@ -33,6 +41,9 @@ export const meetingSchema = z.object({
     location: z.nativeEnum(MeetingLocations),
     notes: z.string().optional().nullable(),
     guests: z.array(z.string().email({"message":"Invalid email"})).optional().nullable()
-}).refine((schema)=> {
+})
+const meetingSchema = meetingSchemaObj.refine((schema)=> {
     return (schema.guests?.includes(schema.email), {message: 'Hi bro'})
 })
+export const createMeetingSchemaID = meetingSchemaObj.extend({id: z.string()})
+export class CreateMeetingDto extends createZodDto(createMeetingSchemaID) {}
