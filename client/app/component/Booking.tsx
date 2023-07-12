@@ -27,7 +27,7 @@ export default function Booking({ data }: any) {
         </h3>
 
         <div className="mt-6">
-          <p className="text-center text-gray-600">
+          <p className="text-center text-gray-500">
             We emailed you and the other attendees a calendar invitation with
             all the details.
           </p>
@@ -62,13 +62,13 @@ export default function Booking({ data }: any) {
         <p className="text-default mt-7 text-center">
           Need to make a change?{" "}
           <button
-            className="underline text-blue-500 mr-2"
+            className="underline text-black mr-2"
             onClick={() => handleNavigateToMeeting(data.id)}
           >
             Reschedule
           </button>
           or
-          <a href="#cancel" className="underline text-blue-500 ml-2">
+          <a href="#cancel" className="underline text-black ml-2">
             Cancel
           </a>
         </p>
