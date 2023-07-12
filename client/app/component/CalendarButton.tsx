@@ -40,7 +40,7 @@ export default function CalendarButton({
           "text-gray-900",
         isEqual(day, selectedDay) && isToday(day) && " bg-black text-red-600",
         isEqual(day, selectedDay) && !isToday(day) && "bg-black text-white",
-        !isEqual(day, selectedDay) && "button-background hover:bg-white",
+        !isEqual(day, selectedDay) && "button-background hover:ring-2 ring-black focus:ring-2 focus:ring-black dark:focus:ring-black dark:focus:bg-black ",
         (isEqual(day, selectedDay) || isToday(day)) && "font-semibold",
         "mx-auto flex button-size items-center justify-center rounded-lg",
         (isSaturday || isSunday) &&

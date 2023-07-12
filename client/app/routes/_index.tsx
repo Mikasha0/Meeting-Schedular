@@ -14,10 +14,10 @@ export default function index() {
   };
   return (
     <>
-      <main className="min-h-screen bg-black flex flex-col items-center">
+      <main className="min-h-screen  flex flex-col items-center bg-[#f3f4f6]">
         <div className="text-white" style={{ marginTop: "7rem" }}>
           <div
-            className="logo-container "
+            className="logo-container bg-gray-300"
             style={{
               width: "6rem",
               height: "6rem",
@@ -27,7 +27,7 @@ export default function index() {
               justifyContent: "center",
               alignItems: "center",
               boxShadow: "0 0 10px rgba(0.9, 0.9, 0.9, 0.9)",
-              backgroundColor: "#2b2b2b",
+
             }}
           >
             <img
@@ -41,16 +41,15 @@ export default function index() {
         <div className="font-col text-emphasis text-3xl mb-1 font-bold">
           Yarsa Labs
         </div>
-        <p className="text-gray-500 text-subtle">
+        <p className="text-gray-500 text-subtle text-sm">
           Book your time at our Pokhara or Kathmandu offices.
         </p>
 
         <div
-          className=" rounded-lg shadow-lg p-4 mt-7 hover:bg-gray-900"
+          className=" rounded-lg shadow-lg p-4 mt-7  bg-white"
           style={{
             maxWidth: "700px",
             width: "100%",
-            backgroundColor: "#1C1C1C",
           }}
           onClick={handleClick}
         >
@@ -62,15 +61,14 @@ export default function index() {
           <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1 mb-2">
             <li>
               <div
-                className="font-medium inline-flex items-center justify-center rounded gap-x-1 bg-subtle text-emphasis py-1 px-1.5 text-xs leading-3 text-white"
-                style={{ backgroundColor: "#2b2b2b" }}
+                className="font-medium inline-flex bg-gray-100 items-center justify-center rounded gap-x-1 bg-subtle text-emphasis py-1 px-1.5 text-xs leading-3 text-white"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="28"
+                  height="28"
                   viewBox="0 0 24 24"
-                  fill="none"
+                  fill="black"
                   stroke="currentColor"
                   stroke-width="2"
                   stroke-linecap="round"

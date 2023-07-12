@@ -182,7 +182,7 @@ export default function Meeting() {
               alt="yarsa_logo"
               style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
             />
-            <p className="text-subtle text-sm font-semibold text-black">
+            <p className="text-subtle text-sm font-semibold text-gray-500">
               Yarsa Labs
             </p>
             <h1 className="text-text text-xl font-semibold my-2 text-black">
@@ -191,7 +191,7 @@ export default function Meeting() {
             <div className="flex items-start justify-start text-sm text-text">
               <div className="relative z-10 mb-8 break-words max-w-full max-h-[180px] scroll-bar pr-4">
                 <div>
-                  <p className="text-black">A 30 minutes meeting.</p>
+                  <p className="text-[#6b7280]">A 30 minutes meeting.</p>
                 </div>
               </div>
             </div>
@@ -258,12 +258,12 @@ export default function Meeting() {
                   <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
                 </button>
               </div>
-              <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-black">
+              <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
                 {Object.values(Weekday).map((day) => (
                   <div key={day}>{day}</div>
                 ))}
               </div>
-              <div className="grid grid-cols-7 mt-2 text-sm">
+              <div className="grid grid-cols-7 mt-2 text-sm font-medium">
                 {days.map((day, dayIdx) => {
                   const isSaturday = getDay(day) === 6; // 6 represents Saturday
                   const isSunday = getDay(day) === 0; // 0 represents Sunday
@@ -299,17 +299,23 @@ export default function Meeting() {
           )}
           {!visible && (
             <section className="mt-12 md:mt-0 md:pl-8 pt-5 pb-5">
-              <h2 className="font-semibold text-black">
-                <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-                  {format(selectedDay, "eee dd")}
-                </time>
-              </h2>
+              <div className="date-time flex justify-between">
+                <h2 className="font-semibold text-black">
+                  <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
+                    {format(selectedDay, "eee dd")}
+                  </time>
+                </h2>
+                <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                  12h
+                </kbd>
+              </div>
+
               {timeValues.map((time) => (
                 <button
                   key={time}
                   type="button"
-                  className="text-black hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
-                  style={{ width: "235px" }}
+                  className="text-black flex justify-center hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
+                  style={{ width: "230px" }}
                   onClick={() => {
                     const currentDate = startOfToday();
                     let selectedDate = new Date(selectedDay);
@@ -407,7 +413,7 @@ export default function Meeting() {
                     />
                     <label
                       htmlFor="Video_Call"
-                      className="block ml-2 text-sm  text-gray-900 dark:text-gray-300"
+                      className="block ml-2 text-sm text-gray-600 "
                     >
                       Video Call (Virtual Meeting)
                     </label>
@@ -420,11 +426,13 @@ export default function Meeting() {
                       value="Yarsa Labs Office, Kathmandu"
                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
                       onChange={handleRadioChange}
-                      checked={selectedLocation === "Yarsa Labs Office, Kathmandu"}
+                      checked={
+                        selectedLocation === "Yarsa Labs Office, Kathmandu"
+                      }
                     />
                     <label
                       htmlFor="YLO_Kathmandu"
-                      className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
+                      className="block ml-2 text-sm text-gray-600"
                     >
                       YLO, Kathmandu (Physical Visit)
                     </label>
@@ -437,11 +445,13 @@ export default function Meeting() {
                       value="Yarsa Labs Office, Pokhara"
                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
                       onChange={handleRadioChange}
-                      checked={selectedLocation === "Yarsa Labs Office, Pokhara"}
+                      checked={
+                        selectedLocation === "Yarsa Labs Office, Pokhara"
+                      }
                     />
                     <label
                       htmlFor="YLO_Pokhara"
-                      className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
+                      className="block ml-2 text-sm text-gray-600"
                     >
                       YLO, Pokhara (Physical Visit)
                     </label>
@@ -514,7 +524,7 @@ export default function Meeting() {
                   ) : (
                     ""
                   )}
-                  <div className="text-right mt-4">
+                  <div className="text-right ">
                     <button
                       type="button"
                       onClick={handleClick}

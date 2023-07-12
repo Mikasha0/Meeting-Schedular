@@ -1,15 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans:wght@500;700;800&display=swap');
-body{
+
+body {
     font-family: 'Noto Sans', sans-serif;
 }
+
 .button-background {
     background-color: #e5e7eb;
 }
 
-.button-background-disabled{
-    background-color:#fff;
-    color:#e5e7eb;
+.button-background-disabled {
+    background-color: #fff;
+    color: #e5e7eb;
 }
+
 .default-width {
     max-width: 700px;
     width: 100%;
@@ -25,10 +28,12 @@ body{
     box-sizing: border-box;
     border: 1px solid #e5e7eb;
 }
-.button-size{
+
+.button-size {
     width: 3.5rem;
     height: 3.5rem;
 }
+
 .text-with-line:before {
     content: "";
     position: absolute;
@@ -37,7 +42,8 @@ body{
     right: 0;
     height: 1px;
     background-color: black;
-  }
-  .line-cut{
+}
+
+.line-cut {
     text-decoration: line-through;
-  }
+}
