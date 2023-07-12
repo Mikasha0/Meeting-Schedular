@@ -27,7 +27,7 @@ export default function CalendarButton({
       }}
       className={classNames(
         isEqual(day, selectedDay) && "text-white",
-        !isEqual(day, selectedDay) && isToday(day) && "text-red-400",
+        !isEqual(day, selectedDay) && isToday(day) && "text-blue-700",
 
         !isEqual(day, selectedDay) &&
           !isToday(day) &&

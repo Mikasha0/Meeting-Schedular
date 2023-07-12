@@ -73,6 +73,7 @@ export const loader = async ({ request }: LoaderArgs) => {
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const { name, email, location, notes, guests } = getMeetingFormData(form);
+  console.log(name, email, location);
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
@@ -107,9 +108,9 @@ export const action = async ({ request }: ActionArgs) => {
       },
       body: JSON.stringify(parseResult.data),
     });
-    
+
     const data = await response.json();
-    console.log(data)
+    console.log(data);
 
     return redirect(`/booking/?bookingId=${data.id}`);
   } catch (error) {
@@ -130,6 +131,8 @@ export default function Meeting() {
   const timeValues = Object.values(ACCEPTED_TIME);
   let [selectedDay, setSelectedDay] = useState(today);
   let [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
+  const [selectedLocation, setSelectedLocation] = useState("Yarsa Meet");
+
   const [visible, setVisible] = useState(false);
 
   let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
@@ -152,6 +155,10 @@ export default function Meeting() {
   const handleClick = () => {
     setVisible(!visible);
     console.log("first");
+  };
+
+  const handleRadioChange = (event: any) => {
+    setSelectedLocation(event.target.value);
   };
 
   return (
@@ -385,22 +392,21 @@ export default function Meeting() {
                       {actionData.fieldErrors.email._errors[0]}
                     </p>
                   ) : null}
-                  <label
-                    htmlFor="first_name"
-                    className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                  <label className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     Location
                   </label>
                   <div className="flex items-center mb-2">
                     <input
-                      id="country-option-1"
                       type="radio"
+                      id="Video_Call"
                       name="location"
                       value="Yarsa Meet"
                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={handleRadioChange}
+                      checked={selectedLocation === "Yarsa Meet"}
                     />
                     <label
-                      htmlFor="country-option-1"
+                      htmlFor="Video_Call"
                       className="block ml-2 text-sm  text-gray-900 dark:text-gray-300"
                     >
                       Video Call (Virtual Meeting)
@@ -408,14 +414,16 @@ export default function Meeting() {
                   </div>
                   <div className="flex items-center mb-2">
                     <input
-                      id="country-option-1"
                       type="radio"
+                      id="YLO_Kathmandu"
                       name="location"
-                      value="Yarsa Meet"
+                      value="Yarsa Labs Office, Kathmandu"
                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={handleRadioChange}
+                      checked={selectedLocation === "Yarsa Labs Office, Kathmandu"}
                     />
                     <label
-                      htmlFor="country-option-1"
+                      htmlFor="YLO_Kathmandu"
                       className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
                     >
                       YLO, Kathmandu (Physical Visit)
@@ -423,23 +431,22 @@ export default function Meeting() {
                   </div>
                   <div className="flex items-center mb-4">
                     <input
-                      id="country-option-1"
                       type="radio"
+                      id="YLO_Pokhara"
                       name="location"
-                      value="Yarsa Meet"
+                      value="Yarsa Labs Office, Pokhara"
                       className="w-4 h-4 border-gray-300 focus:ring-2 focus:ring-blue-300 dark:focus:ring-blue-600 dark:focus:bg-blue-600 dark:bg-gray-700 dark:border-gray-600"
+                      onChange={handleRadioChange}
+                      checked={selectedLocation === "Yarsa Labs Office, Pokhara"}
                     />
                     <label
-                      htmlFor="country-option-1"
+                      htmlFor="YLO_Pokhara"
                       className="block ml-2 text-sm text-gray-900 dark:text-gray-300"
                     >
                       YLO, Pokhara (Physical Visit)
                     </label>
                   </div>
-                  <label
-                    htmlFor="first_name"
-                    className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
+                  <label className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
                     {data.id ? "Reason For Reschedule" : "Additional notes"}
                   </label>
                   <textarea
