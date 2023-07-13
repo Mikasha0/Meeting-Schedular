@@ -1,6 +1,7 @@
 import { GoPersonAdd } from "react-icons/go";
+import { AddGuestsProps } from "~/types/add-guest.types";
 
-export default function AddGuest({setShowInput, showInput, actionData}:any) {
+export default function AddGuest({setShowInput, showInput, actionData}:AddGuestsProps) {
   return (
     <>
     <button

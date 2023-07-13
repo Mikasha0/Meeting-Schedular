@@ -1,6 +1,6 @@
-import React from 'react'
+import { RadioButtonsProp } from "~/types/radio-buttons.types";
 
-export default function RadioButtons({handleRadioChange, selectedLocation}:any) {
+export default function RadioButtons({handleRadioChange, selectedLocation}:RadioButtonsProp) {
   return (
     <>
              <label className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
