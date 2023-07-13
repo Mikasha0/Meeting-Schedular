@@ -2,8 +2,8 @@ import yarsa_cube from "~/images/yarsa-cube-grey.svg";
 import { AiOutlineClockCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
 import { BsCalendarDate } from "react-icons/bs";
-import { format, parseISO } from "date-fns";
-import { MeetingDetailsProp } from "~/types/meeting-details.typss";
+import { format, parseISO, addMinutes } from "date-fns";
+import { MeetingDetailsProp } from "~/types/meeting-details.types";
 import stylesheet from "~/styles/meeting.css";
 import { LinksFunction } from "@remix-run/node";
 
@@ -12,6 +12,15 @@ export const links: LinksFunction = () => [
 ];
 
 export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
+  const originalTime = data.time;
+  let increasedTime = '';
+  
+  if (originalTime !== null && originalTime !== undefined) {
+    const [hours, minutes] = originalTime.split(':');
+    const newTime = addMinutes(new Date(0, 0, 0, parseInt(hours), parseInt(minutes)), 30);
+    increasedTime = format(newTime, 'HH:mm');
+  }
+  
   return (
     <section
       className="mt-12 md:mt-0 md:mr-3 pt-5 meet-det-dimension"
@@ -20,7 +29,6 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
         src={yarsa_cube}
         alt="meeting-details-yarsa-logo"
         className="meeting-details-yarsa-logo"
-        // style={{ width: "40px", height: "22px", marginBottom: "0.5rem" }}
       />
       <p className=" text-sm font-semibold text-gray-500">
         Yarsa Labs
@@ -40,8 +48,7 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
           <BsCalendarDate size={18} className="mr-2 " />{" "}
           {format(parseISO(data.start), "EEE, MMMM d, yyyy")}
           <br />
-          {/* {data.time} */}
-          12:00am – 12:30am
+          {data.time} - {addMinutes(data.time, 30)}
         </div>
       ) : (
         ""
@@ -52,8 +59,7 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
           <BsCalendarDate size={18} className="mr-2 " />{" "}
           {data.newFormattedDate ? data.newFormattedDate : data.formattedDate}
           <br />
-          {/* {data.time} */}
-          12:00am – 12:30amm
+          {data.time} - {increasedTime}
         </div>
       )}
 
