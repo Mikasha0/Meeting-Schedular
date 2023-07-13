@@ -1,5 +1,5 @@
-import { createZodDto } from "nestjs-zod";
 import { z } from "zod";
+import { zodToTs } from "zod-to-ts";
 export const Weekday = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"] as const
 
 z.enum(Weekday)
@@ -46,4 +46,5 @@ const meetingSchema = meetingSchemaObj.refine((schema)=> {
     return (schema.guests?.includes(schema.email), {message: 'Hi bro'})
 })
 export const createMeetingSchemaID = meetingSchemaObj.extend({id: z.string()})
-export class CreateMeetingDto extends createZodDto(createMeetingSchemaID) {}
+// export class CreateMeetingDto extends createZodDto(createMeetingSchemaID) {}
+export type CreateMeetingDto = z.infer<typeof createMeetingSchemaID>
