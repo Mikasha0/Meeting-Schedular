@@ -68,8 +68,8 @@ export const loader = async ({ request }: LoaderArgs) => {
 
 export const action = async ({ request }: ActionArgs) => {
   const form = await request.formData();
-  const { name, email, location, notes, guests } = getMeetingFormData(form);
-  console.log(name, email, location);
+  const { name, email, location, notes, guests,reason } = getMeetingFormData(form);
+  console.log(form.entries);
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
@@ -81,6 +81,7 @@ export const action = async ({ request }: ActionArgs) => {
     location,
     notes: notes === "" ? null : notes,
     guests,
+    reason
   });
 
   if (!parseResult.success) {

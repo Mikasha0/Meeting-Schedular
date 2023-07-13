@@ -39,8 +39,6 @@ export const colStartClasses = [
 export const EventActions = {
   CREATE: "notes",
   RESCHEDULE: "reason",
-  CREATE_NOTES: "Confirm",
-  RESCHEDULE_REASON: "Reschedule",
 };
 
 export enum MeetingLocations {
@@ -67,8 +65,11 @@ export const meetingSchemaObj = z.object({
 const meetingSchema = meetingSchemaObj.refine((schema) => {
   return schema.guests?.includes(schema.email), { message: "Hi bro" };
 });
+
+export const MeetingIdReSchedule = meetingSchemaObj.extend({
+  reason:z.string().optional().nullable(),
+})
 export const createMeetingSchemaID = meetingSchemaObj.extend({
   id: z.string(),
 });
-// export class CreateMeetingDto extends createZodDto(createMeetingSchemaID) {}
 export type CreateMeetingDto = z.infer<typeof createMeetingSchemaID>;

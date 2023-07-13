@@ -14,7 +14,9 @@ export default function MeetingForm({
 }: MeetingFormProps) {
   const [showInput, setShowInput] = useState(false);
   const getEvent = () => {
+    console.log(EventActions.CREATE);
     return data.id ? EventActions.CREATE : EventActions.RESCHEDULE;
+
   };
   return (
     <section className="mt-12 md:mt-0 md:pl-6 pt-5 pb-5">
@@ -79,7 +81,7 @@ export default function MeetingForm({
           </label>
           <textarea
             id="message"
-            name="notes"
+            name={data.id?"reason":"notes"}
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Please share anything that will help prepare for our meeting"
           ></textarea>

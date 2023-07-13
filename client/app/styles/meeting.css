@@ -59,3 +59,9 @@ body {
     height: 22px;
     margin-bottom: 0.5rem;
 }
+
+.calendar-dimension{
+    max-width: 480;
+    width: 100%;
+    background-color: #fff;
+}

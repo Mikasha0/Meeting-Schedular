@@ -6,12 +6,12 @@ export default function Calendar({firstDayCurrentMonth,previousMonth,nextMonth, 
 
   return (
     <div
-      className="md:pr-4 md:pl-4 pt-5 pb-3"
-      style={{
-        maxWidth: "480px",
-        width: "100%",
-        backgroundColor: "#fff",
-      }}
+      className="md:pr-4 md:pl-4 pt-5 pb-3 calendar-dimension"
+      // style={{
+      //   maxWidth: "480px",
+      //   width: "100%",
+      //   backgroundColor: "#fff",
+      // }}
     >
       <div className="flex items-center">
         <h2 className="flex-auto font-semibold text-black">

@@ -8,6 +8,7 @@ export function getMeetingFormData(form: FormData) {
       location: form.get('location') as string,
       notes: form.get('notes'),
       guests: guestList ?[guestList]: null,
+      reason:form.get("reason")
     };
   }
   
