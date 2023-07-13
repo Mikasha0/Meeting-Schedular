@@ -13,9 +13,6 @@ import {
   endOfMonth,
   format,
   getDay,
-  isEqual,
-  isSameMonth,
-  isToday,
   parse,
   startOfToday,
 } from "date-fns";
@@ -130,7 +127,7 @@ export default function Meeting() {
 
   const [visible, setVisible] = useState(false);
 
-  let firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
+  const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
 
   let days = eachDayOfInterval({
     start: firstDayCurrentMonth,
@@ -214,16 +211,12 @@ export default function Meeting() {
                       )}
                     >
                       <CalendarButton
-                        isEqual={isEqual}
-                        isToday={isToday}
                         day={day}
                         selectedDay={selectedDay}
                         setSelectedDay={setSelectedDay}
                         firstDayCurrentMonth={firstDayCurrentMonth}
-                        isSameMonth={isSameMonth}
                         isSaturday={isSaturday}
                         isSunday={isSunday}
-                        format={format}
                         classNames={classNames}
                       />
 

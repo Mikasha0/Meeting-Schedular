@@ -1,15 +1,11 @@
-import { startOfToday } from "date-fns";
+import { startOfToday, isToday, isEqual, isSameMonth,format } from "date-fns";
 export default function CalendarButton({
-  isEqual,
-  isToday,
   day,
   selectedDay,
   setSelectedDay,
   firstDayCurrentMonth,
-  isSameMonth,
   isSaturday,
   isSunday,
-  format,
   classNames,
 }: any) {
 
