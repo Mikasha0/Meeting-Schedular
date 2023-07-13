@@ -1,4 +1,5 @@
 import { startOfToday, isToday, isEqual, isSameMonth,format } from "date-fns";
+import { CalendarButtonProp } from "~/types/calendar-button.types";
 export default function CalendarButton({
   day,
   selectedDay,
@@ -7,7 +8,7 @@ export default function CalendarButton({
   isSaturday,
   isSunday,
   classNames,
-}: any) {
+}: CalendarButtonProp) {
 
   const currentDate = startOfToday();
   console.log(currentDate);

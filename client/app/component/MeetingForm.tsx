@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { GoPersonAdd } from "react-icons/go";
 import { Form } from "@remix-run/react";
 import { EventActions } from "~/types/z.schema";
 import RadioButtons from "./RadioButtons";

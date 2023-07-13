@@ -4,29 +4,31 @@ import { CiLocationOn } from "react-icons/ci";
 import { BsCalendarDate } from "react-icons/bs";
 import { format, parseISO } from "date-fns";
 import { MeetingDetailsProp } from "~/types/meeting-details.typss";
+import stylesheet from "~/styles/meeting.css";
+import { LinksFunction } from "@remix-run/node";
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: stylesheet },
+];
 
 export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
   return (
     <section
-      className="mt-12 md:mt-0 md:mr-3 pt-5"
-      style={{
-        maxWidth: "250px",
-        width: "100%",
-        backgroundColor: "#fff",
-      }}
+      className="mt-12 md:mt-0 md:mr-3 pt-5 meet-det-dimension"
     >
       <img
         src={yarsa_cube}
-        alt="yarsa_logo"
-        style={{ width: "22px", height: "22px", marginBottom: "0.5rem" }}
+        alt="meeting-details-yarsa-logo"
+        className="meeting-details-yarsa-logo"
+        // style={{ width: "40px", height: "22px", marginBottom: "0.5rem" }}
       />
-      <p className="text-subtle text-sm font-semibold text-gray-500">
+      <p className=" text-sm font-semibold text-gray-500">
         Yarsa Labs
       </p>
-      <h1 className="text-text text-xl font-semibold my-2 text-black">
+      <h1 className=" text-xl font-semibold my-2 text-black">
         30 Min Meeting
       </h1>
-      <div className="flex items-start justify-start text-sm text-text">
+      <div className="flex items-start justify-start text-sm">
         <div className="relative z-10 mb-8 break-words max-w-full max-h-[180px] scroll-bar pr-4">
           <div>
             <p className="text-[#6b7280]">A 30 minutes meeting.</p>

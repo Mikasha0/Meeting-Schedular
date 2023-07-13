@@ -1,6 +1,7 @@
 import {format,startOfToday} from 'date-fns'
+import { MeetingTimesProps } from '~/types/meeting-times.types';
 
-export default function MeetingTimes({selectedDay,timeValues, data, navigate,setVisible,visible}:any) {
+export default function MeetingTimes({selectedDay,timeValues, data, navigate,setVisible,visible}:MeetingTimesProps) {
   return (
     <section className="mt-12 md:mt-0 md:pl-8 pt-5 pb-5">
     <div className="date-time flex justify-between">
@@ -14,7 +15,7 @@ export default function MeetingTimes({selectedDay,timeValues, data, navigate,set
       </kbd>
     </div>
 
-    {timeValues.map((time:any) => (
+    {timeValues.map((time) => (
       <button
         key={time}
         type="button"

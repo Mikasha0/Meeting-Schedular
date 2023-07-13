@@ -47,3 +47,15 @@ body {
 .line-cut {
     text-decoration: line-through;
 }
+
+.meet-det-dimension{
+    max-width: 250px;
+    width: 100%;
+    background-color: #fff;
+}
+
+.meeting-details-yarsa-logo{
+    width: 40px;
+    height: 22px;
+    margin-bottom: 0.5rem;
+}
