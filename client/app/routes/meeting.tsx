@@ -17,7 +17,7 @@ import {
 } from "date-fns";
 import { useState } from "react";
 import Calendar from "~/component/Calendar";
-import DateShow from "~/component/DateShow";
+import MeetingDetails from "~/component/MeetingDetails";
 import MeetingForm from "~/component/MeetingForm";
 import MeetingTimes from "~/component/MeetingTimes";
 import stylesheet from "~/styles/meeting.css";
@@ -125,9 +125,7 @@ export default function Meeting() {
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [selectedLocation, setSelectedLocation] = useState("Yarsa Meet");
   const [visible, setVisible] = useState(false);
-
   const firstDayCurrentMonth = parse(currentMonth, "MMM-yyyy", new Date());
-
   const days = eachDayOfInterval({
     start: firstDayCurrentMonth,
     end: endOfMonth(firstDayCurrentMonth),
@@ -159,7 +157,7 @@ export default function Meeting() {
         }`}
       >
         <div className="flex flex-col md:flex-row sm:divide-x ">
-          <DateShow data={data} visible={visible} />
+          <MeetingDetails data={data} visible={visible} />
           {!visible && (
             <Calendar
               firstDayCurrentMonth={firstDayCurrentMonth}
