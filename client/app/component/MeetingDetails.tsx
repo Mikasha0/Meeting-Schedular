@@ -13,6 +13,8 @@ export const links: LinksFunction = () => [
 
 export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
   const originalTime = data.time;
+  console.log(originalTime);
+  console.log(data.time)
   let increasedTime = '';
   
   if (originalTime !== null && originalTime !== undefined) {
@@ -48,7 +50,6 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
           <BsCalendarDate size={18} className="mr-2 " />{" "}
           {format(parseISO(data.start), "EEE, MMMM d, yyyy")}
           <br />
-          {data.time} - {addMinutes(data.time, 30)}
         </div>
       ) : (
         ""

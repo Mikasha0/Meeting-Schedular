@@ -59,20 +59,92 @@ export const loader = async ({ request }: LoaderArgs) => {
       day: "numeric",
       year: "numeric",
     });
-    const data = await res.json();
-    return { ...data, newFormattedDate };
-  }
+    const time = url.searchParams.get("time");
 
+    const data = await res.json();
+    console.log(data);
+    console.log(time)
+    console.log(data.notes);
+    return { ...data, newFormattedDate, time};
+  }
+  console.log(time);
   return json({ formattedDate, time });
 };
 
-export const action = async ({ request }: ActionArgs) => {
+export async function action(args: ActionArgs) {
+  const formData = await args.request.clone().formData()
+  const _action = formData.get("_action")
+  if (_action === "CREATE") {
+    return createMeetingAction(args)
+  }
+  if (_action === "RESCHEDULE") {
+    return rescheduleMeetingAction(args)
+  }
+  throw new Error("Unknown action")
+}
+
+export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const { name, email, location, notes, guests,reason } = getMeetingFormData(form);
   console.log(form.entries);
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
+  const reschedule = params.get("reschedule");
+  console.log(reschedule);
+  const parseResult = meetingSchemaObj.safeParse({
+    time,
+    email,
+    date,
+    name,
+    location,
+    notes: notes === "" ? null : notes,
+    guests,
+    reason
+  });
+
+  if (!parseResult.success) {
+    const fieldErrors = parseResult.error.format();
+    console.log(JSON.stringify(fieldErrors));
+
+    return badRequest({
+      fieldErrors,
+      fields: null,
+      formError: "Form not submitted correctly",
+    });
+  }
+
+  const API_URL = `http://localhost:3333/api/meeting/${reschedule}`;
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(parseResult.data),
+    });
+    const data = await response.json();
+    console.log(data);
+    console.log(data.notes);
+
+    return redirect(`/booking/?bookingId=${data.id}/?notes=${data.reason}`);
+  } catch (error) {
+    console.log("API request error:", error);
+    return new Response("API request error", { status: 500 });
+  }
+}
+
+
+export const createMeetingAction = async ({ request }: ActionArgs) => {
+  const form = await request.formData();
+  const { name, email, location, notes, guests,reason } = getMeetingFormData(form);
+  console.log(form.entries);
+  const params = new URLSearchParams(request.url.split("?")[1]);
+  const time = params.get("time");
+  const date = params.get("date");
+  const reschedule = params.get("reschedule");
+  console.log(reschedule);
   const parseResult = meetingSchemaObj.safeParse({
     time,
     email,
@@ -105,11 +177,11 @@ export const action = async ({ request }: ActionArgs) => {
       },
       body: JSON.stringify(parseResult.data),
     });
-
     const data = await response.json();
     console.log(data);
+    console.log(data.notes);
 
-    return redirect(`/booking/?bookingId=${data.id}`);
+    return redirect(`/booking/?bookingId=${data.id}/?notes=${data.notes}`);
   } catch (error) {
     console.log("API request error:", error);
     return new Response("API request error", { status: 500 });

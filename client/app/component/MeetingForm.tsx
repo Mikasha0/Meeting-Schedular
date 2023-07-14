@@ -16,7 +16,6 @@ export default function MeetingForm({
   const getEvent = () => {
     console.log(EventActions.CREATE);
     return data.id ? EventActions.CREATE : EventActions.RESCHEDULE;
-
   };
   return (
     <section className="mt-12 md:mt-0 md:pl-6 pt-5 pb-5">
@@ -81,7 +80,7 @@ export default function MeetingForm({
           </label>
           <textarea
             id="message"
-            name={data.id?"reason":"notes"}
+            name={data.id ? "reason" : "notes"}
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Please share anything that will help prepare for our meeting"
           ></textarea>
@@ -102,12 +101,27 @@ export default function MeetingForm({
             >
               Back
             </button>
-            <button
-              type="submit"
-              className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-400 hover:text-white focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-white dark:text-black dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-            >
-              {data.id ? "Reschedule" : "Confirm"}
-            </button>
+            {!data.id ? (
+              <button
+                type="submit"
+                name="_action"
+                value="CREATE"
+                className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-400 hover:text-white focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-white dark:text-black dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              >
+                {/* {data.id ? "Reschedule" : "Confirm"} */}
+                Confirm
+              </button>
+            ) : (
+              <button
+                type="submit"
+                name="_action"
+                value="RESCHEDULE"
+                className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-400 hover:text-white focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-white dark:text-black dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+              >
+                {/* {data.id ? "Reschedule" : "Confirm"} */}
+                Reschedule
+              </button>
+            )}
           </div>
         </div>
       </Form>

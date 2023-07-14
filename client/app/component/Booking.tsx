@@ -63,7 +63,7 @@ export default function Booking({ data }: any) {
           Need to make a change?{" "}
           <button
             className="underline text-black mr-2"
-            onClick={() => handleNavigateToMeeting(data.id)}
+            onClick={() => navigate(`/meeting/?reschedule=${data.id}`)}
           >
             Reschedule
           </button>
