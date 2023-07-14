@@ -4,10 +4,7 @@ import { format, parseISO } from "date-fns";
 
 export default function Booking({ data }: any) {
   const navigate = useNavigate();
-
-  const handleNavigateToMeeting = (id: any) => {
-    navigate(`/meeting/?reschedule=${id}`);
-  };
+  console.log(data);
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -57,6 +54,8 @@ export default function Booking({ data }: any) {
           </div>
           <div className="mt-2 font-semibold">Where</div>
           <div className="col-span-2 mt-2 text-gray-800">{data.location}</div>
+          <div className="mt-2 font-semibold">Reason</div>
+          <div className="col-span-2 mt-2 text-gray-800">{data.reason}</div>
         </div>
         <hr className="mt-7" />
         <p className="text-default mt-7 text-center">

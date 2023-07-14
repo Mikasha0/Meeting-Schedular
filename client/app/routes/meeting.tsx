@@ -24,6 +24,7 @@ import stylesheet from "~/styles/meeting.css";
 import {
   ACCEPTED_TIME,
   CreateMeetingDto,
+  MeetingIdReSchedule,
   Weekday,
   colStartClasses,
   meetingSchemaObj,
@@ -92,7 +93,7 @@ export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
   const date = params.get("date");
   const reschedule = params.get("reschedule");
   console.log(reschedule);
-  const parseResult = meetingSchemaObj.safeParse({
+  const parseResult = MeetingIdReSchedule.safeParse({
     time,
     email,
     date,
@@ -139,6 +140,7 @@ export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
 export const createMeetingAction = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const { name, email, location, notes, guests,reason } = getMeetingFormData(form);
+  console.log(notes)
   console.log(form.entries);
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
@@ -155,7 +157,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
     guests,
     reason
   });
-
+  
   if (!parseResult.success) {
     const fieldErrors = parseResult.error.format();
     console.log(JSON.stringify(fieldErrors));
@@ -166,7 +168,6 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
       formError: "Form not submitted correctly",
     });
   }
-
   const API_URL = "http://localhost:3333/api/meeting";
 
   try {
