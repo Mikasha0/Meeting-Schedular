@@ -14,6 +14,11 @@ import {
   getDay,
   parse,
   startOfToday,
+  startOfTomorrow,
+  isSaturday,
+  isSunday,
+  addDays,
+  setDay
 } from "date-fns";
 import { useState } from "react";
 import Calendar from "~/component/Calendar";
@@ -192,10 +197,25 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
 export default function Meeting() {
   const navigate = useNavigate();
   const today = startOfToday();
+  
+  
+const tomorrow = getNextBusinessDay();
+
+function getNextBusinessDay() {
+  const tomorrow = startOfTomorrow();
+
+  if (isSaturday(tomorrow) || isSunday(tomorrow)) {
+    const nextMonday = setDay(addDays(tomorrow, 2), 1); // Set to Monday (1 is Monday, 0 is Sunday)
+    return nextMonday;
+  } else {
+    return tomorrow;
+  }
+}
+  console.log(tomorrow);
   const data: CreateMeetingDto = useLoaderData<typeof loader>();
   const actionData = useActionData<typeof action>();
   const timeValues = Object.values(ACCEPTED_TIME);
-  const [selectedDay, setSelectedDay] = useState(today);
+  const [selectedDay, setSelectedDay] = useState(tomorrow);
   const [currentMonth, setCurrentMonth] = useState(format(today, "MMM-yyyy"));
   const [selectedLocation, setSelectedLocation] = useState("Yarsa Meet");
   const [visible, setVisible] = useState(false);
@@ -270,3 +290,5 @@ export default function Meeting() {
     </div>
   );
 }
+
+
