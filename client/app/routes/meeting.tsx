@@ -49,12 +49,15 @@ export const loader = async ({ request }: LoaderArgs) => {
   const rescheduleId = url.searchParams.get("reschedule");
   const time = url.searchParams.get("time");
   const date = url.searchParams.get("date") ?? new Date();
-  const formattedDate = new Date(date).toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
+  // const formattedDate = new Date(date).toLocaleDateString("en-US", {
+  //   timeZone: "Asia/Kathmandu",
+  //   weekday: "long",
+  //   month: "long",
+  //   day: "numeric",
+  //   year: "numeric",
+  // });
+  
+  
   if (rescheduleId) {
     const res = await fetch(
       `http://localhost:3333/api/meeting/${rescheduleId}`
@@ -65,16 +68,20 @@ export const loader = async ({ request }: LoaderArgs) => {
       day: "numeric",
       year: "numeric",
     });
-    const time = url.searchParams.get("time");
 
     const data = await res.json();
+    const oldTime = data.time;
+    const oldDate = data.date
+    console.log(oldDate);
+    const newTime = url.searchParams.get("time");
+    const newDate = url.searchParams.get("date");
+    console.log(oldTime)
     console.log(data);
-    console.log(time)
     console.log(data.notes);
-    return { ...data, newFormattedDate, time};
+    return { ...data, newFormattedDate, oldTime, newTime, oldDate,newDate};
   }
   console.log(time);
-  return json({ formattedDate, time });
+  return json({ date, time });
 };
 
 export async function action(args: ActionArgs) {
@@ -132,9 +139,10 @@ export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
     });
     const data = await response.json();
     console.log(data);
-    console.log(data.notes);
+    console.log(data.reason);
 
-    return redirect(`/booking/?bookingId=${data.id}/?notes=${data.reason}`);
+    return redirect(`/booking/?bookingId=${data.id}/&reason=${data.reason}`);
+    
   } catch (error) {
     console.log("API request error:", error);
     return new Response("API request error", { status: 500 });
@@ -150,6 +158,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
+  console.log(date)
   const reschedule = params.get("reschedule");
   console.log(reschedule);
   const parseResult = meetingSchemaObj.safeParse({
@@ -174,6 +183,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
     });
   }
   const API_URL = "http://localhost:3333/api/meeting";
+  console.log(date)
 
   try {
     const response = await fetch(API_URL, {
@@ -183,11 +193,12 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
       },
       body: JSON.stringify(parseResult.data),
     });
+    console.log(parseResult.data)
     const data = await response.json();
     console.log(data);
     console.log(data.notes);
 
-    return redirect(`/booking/?bookingId=${data.id}/?notes=${data.notes}`);
+    return redirect(`/booking/?bookingId=${data.id}`);
   } catch (error) {
     console.log("API request error:", error);
     return new Response("API request error", { status: 500 });
@@ -290,5 +301,4 @@ function getNextBusinessDay() {
     </div>
   );
 }
-
 

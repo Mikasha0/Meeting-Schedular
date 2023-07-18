@@ -6,6 +6,7 @@ import { format, parseISO, addMinutes } from "date-fns";
 import { MeetingDetailsProp } from "~/types/meeting-details.types";
 import stylesheet from "~/styles/meeting.css";
 import { LinksFunction } from "@remix-run/node";
+const { getIncreasedTime } = require('~/utils/increasedDate');
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
@@ -13,15 +14,11 @@ export const links: LinksFunction = () => [
 
 export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
   const originalTime = data.time;
-  console.log(originalTime);
-  console.log(data.time)
-  let increasedTime = '';
+  const newTime = data.newTime;
+
   
-  if (originalTime !== null && originalTime !== undefined) {
-    const [hours, minutes] = originalTime.split(':');
-    const newTime = addMinutes(new Date(0, 0, 0, parseInt(hours), parseInt(minutes)), 30);
-    increasedTime = format(newTime, 'HH:mm');
-  }
+  const increasedOriginalTime = getIncreasedTime(originalTime);
+  const increasedNewTime = getIncreasedTime(newTime);
   
   return (
     <section
@@ -45,11 +42,12 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
           </div>
         </div>
       </div>
-      {data.start ? (
+      {data.oldTime ? (
         <div className="relative z-10 max-w-full break-words mb-3 text-sm flex line-cut">
           <BsCalendarDate size={18} className="mr-2 " />{" "}
-          {format(parseISO(data.start), "EEE, MMMM d, yyyy")}
+          {format(new Date(data.oldDate), 'EEE, MMMM d, yyyy')}
           <br />
+          {data.oldTime} -{increasedOriginalTime}
         </div>
       ) : (
         ""
@@ -58,9 +56,9 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
       {visible && (
         <div className="relative z-10 max-w-full break-words mb-3 text-sm flex">
           <BsCalendarDate size={18} className="mr-2 " />{" "}
-          {data.newFormattedDate ? data.newFormattedDate : data.formattedDate}
+          {format(new Date(data.id ? data.newDate : data.date), 'EEE, MMMM d, yyyy')}
           <br />
-          {data.time} - {increasedTime}
+          {data.id?data.newTime:data.time} - {data.id?increasedNewTime:increasedOriginalTime}
         </div>
       )}
 

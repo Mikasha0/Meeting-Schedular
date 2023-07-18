@@ -1,10 +1,14 @@
 import { useNavigate } from "@remix-run/react";
 import { BsCheckCircleFill } from "react-icons/bs";
-import { format, parseISO } from "date-fns";
+import { format } from "date-fns";
+const { getIncreasedTime } = require('~/utils/increasedDate');
+
 
 export default function Booking({ data }: any) {
   const navigate = useNavigate();
+
   console.log(data);
+  const increasedTime = getIncreasedTime(data.time)
 
   return (
     <div className="min-h-screen bg-gray-100 py-8">
@@ -37,9 +41,9 @@ export default function Booking({ data }: any) {
           <div className="font-semibold">When</div>
           <div className="col-span-2 mt-2 mb-6 text-gray-800">
             <div key={data.id}>
-            {format(parseISO(data.start), 'EEEE, MMMM d, yyyy')}
+              {format(new Date(data.date), 'EEEE, MMMM d, yyyy')}
               <br />
-              12:00 AM - 12:30 AM
+              {data.time} - {increasedTime}
             </div>
           </div>
           <div className="font-semibold">Who</div>
@@ -54,15 +58,32 @@ export default function Booking({ data }: any) {
           </div>
           <div className="mt-2 font-semibold">Where</div>
           <div className="col-span-2 mt-2 text-gray-800">{data.location}</div>
-          <div className="mt-2 font-semibold">Reason</div>
-          <div className="col-span-2 mt-2 text-gray-800">{data.reason}</div>
+          {data.notes ? (
+            <>
+              <div className="mt-2 font-semibold">Notes</div>
+              <div className="col-span-2 mt-2 text-gray-800">{data.notes}</div>
+            </>
+          ) : (
+            ""
+          )}
+
+          {data.reason ? (
+            <>
+              <div className="mt-2 font-semibold">Reason for Reschedule</div>
+              <div className="col-span-2 mt-2 text-gray-800">{data.reason}</div>
+            </>
+          ) : (
+            ""
+          )}
         </div>
         <hr className="mt-7" />
         <p className="text-default mt-7 text-center">
           Need to make a change?{" "}
           <button
             className="underline text-black mr-2"
-            onClick={() => navigate(`/meeting/?reschedule=${data.id}`)}
+            onClick={() =>
+              navigate(`/meeting/?reschedule=${data.id}/?time=${data.time}`)
+            }
           >
             Reschedule
           </button>

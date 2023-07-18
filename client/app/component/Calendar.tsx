@@ -1,14 +1,21 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import CalendarButton from "./CalendarButton";
-import {format} from 'date-fns'
+import { format } from "date-fns";
 
-export default function Calendar({firstDayCurrentMonth,previousMonth,nextMonth, Weekday, days, getDay,classNames,colStartClasses,setSelectedDay, selectedDay}:any) {
-
+export default function Calendar({
+  firstDayCurrentMonth,
+  previousMonth,
+  nextMonth,
+  Weekday,
+  days,
+  getDay,
+  classNames,
+  colStartClasses,
+  setSelectedDay,
+  selectedDay,
+}: any) {
   return (
-    <div
-      className="md:pr-4 md:pl-4 pt-5 pb-3 calendar-dimension"
-    
-    >
+    <div className="md:pr-4 md:pl-4 pt-5 pb-3 calendar-dimension">
       <div className="flex items-center">
         <h2 className="flex-auto font-semibold text-black">
           {format(firstDayCurrentMonth, "MMMM yyyy")}
@@ -31,15 +38,14 @@ export default function Calendar({firstDayCurrentMonth,previousMonth,nextMonth, 
         </button>
       </div>
       <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">
-        {Object.values(Weekday).map((day:any) => (
+        {Object.values(Weekday).map((day: any) => (
           <div key={day}>{day}</div>
         ))}
       </div>
       <div className="grid grid-cols-7 mt-2 text-sm font-medium">
-        {days.map((day:any, dayIdx:any) => {
+        {days.map((day: any, dayIdx: any) => {
           const isSaturday = getDay(day) === 6; // 6 represents Saturday
           const isSunday = getDay(day) === 0; // 0 represents Sunday
-
           return (
             <div
               key={day.toString()}
