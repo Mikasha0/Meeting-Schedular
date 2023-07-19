@@ -175,7 +175,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
   
   if (!parseResult.success) {
     const fieldErrors = parseResult.error.format();
-    console.log(JSON.stringify(fieldErrors._errors[1]));
+    console.log(JSON.stringify(fieldErrors));
 
     return badRequest({
       fieldErrors,

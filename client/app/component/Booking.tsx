@@ -1,16 +1,23 @@
-import { useNavigate } from "@remix-run/react";
+import { Form, useNavigate } from "@remix-run/react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { format } from "date-fns";
-const { getIncreasedTime } = require('~/utils/increasedDate');
+import { useState } from "react";
+import MeetingCancelButton from "./MeetingCancelButton";
+const { getIncreasedTime } = require("~/utils/increasedDate");
+
 
 
 export default function Booking({ data }: any) {
   const navigate = useNavigate();
+  const increasedTime = getIncreasedTime(data.time);
+  const [showCancelField, setShowCancelField] = useState(false);
 
-  console.log(data);
-  const increasedTime = getIncreasedTime(data.time)
+  const showFiled = () => {
+    setShowCancelField(!showCancelField);
+  };
 
   return (
+    // <Form>
     <div className="min-h-screen bg-gray-100 py-8">
       <div
         className="max-w-md mx-auto sm:p-6 md:max-w-4xl md:p-8 rounded-lg border border-gray-300 bg-white"
@@ -41,7 +48,7 @@ export default function Booking({ data }: any) {
           <div className="font-semibold">When</div>
           <div className="col-span-2 mt-2 mb-6 text-gray-800">
             <div key={data.id}>
-              {format(new Date(data.date), 'EEEE, MMMM d, yyyy')}
+              {format(new Date(data.date), "EEEE, MMMM d, yyyy")}
               <br />
               {data.time} - {increasedTime}
             </div>
@@ -87,10 +94,8 @@ export default function Booking({ data }: any) {
           >
             Reschedule
           </button>
-          or
-          <a href="#cancel" className="underline text-black ml-2">
-            Cancel
-          </a>
+          or{" "}
+  <MeetingCancelButton showCancelField={showCancelField} setShowCancelField={setShowCancelField}/>
         </p>
       </div>
     </div>

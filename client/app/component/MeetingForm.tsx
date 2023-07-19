@@ -43,7 +43,7 @@ export default function MeetingForm({
               role="alert"
               id="name-error"
             >
-              {/* {actionData.fieldErrors.name._errors[0]} */}
+              {actionData.fieldErrors.name._errors[0]}
             </p>
           ) : null}
           <label
