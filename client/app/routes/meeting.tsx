@@ -50,13 +50,6 @@ export const loader = async ({ request }: LoaderArgs) => {
   const rescheduleId = url.searchParams.get("reschedule");
   const time = url.searchParams.get("time");
   const date = url.searchParams.get("date") ?? new Date();
-  // const formattedDate = new Date(date).toLocaleDateString("en-US", {
-  //   timeZone: "Asia/Kathmandu",
-  //   weekday: "long",
-  //   month: "long",
-  //   day: "numeric",
-  //   year: "numeric",
-  // });
   
   
   if (rescheduleId) {
@@ -142,7 +135,7 @@ export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
     console.log(data);
     console.log(data.reason);
 
-    return redirect(`/booking/?bookingId=${data.id}/&reason=${data.reason}`);
+    return redirect(`/booking/?bookingId=${data.id}/&reason=${data.reason}/&newDate=${date}`);
     
   } catch (error) {
     console.log("API request error:", error);

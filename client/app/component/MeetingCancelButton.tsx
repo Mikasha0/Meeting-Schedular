@@ -1,4 +1,9 @@
-export default function MeetingCancelButton({setShowCancelField,showCancelField}:any) {
+import { Form } from "@remix-run/react";
+
+export default function MeetingCancelButton({
+  setShowCancelField,
+  showCancelField,
+}: any) {
   return (
     <>
       <button
@@ -9,6 +14,7 @@ export default function MeetingCancelButton({setShowCancelField,showCancelField}
       </button>
       {showCancelField ? (
         <>
+        <Form>
           <textarea
             id="message"
             name="cancel"
@@ -24,10 +30,11 @@ export default function MeetingCancelButton({setShowCancelField,showCancelField}
               Submit
             </button>
           </div>
+          </Form>
         </>
       ) : (
         ""
-      )}{" "}
+      )}
     </>
   );
 }

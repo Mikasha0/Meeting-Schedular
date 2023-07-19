@@ -69,6 +69,10 @@ export const meetingSchema = meetingSchemaObj.refine(
   },
 );
 
+export const cancelSchemaObj = z.object({
+  cancel: z.string().optional().nullable()
+})
+
 export const MeetingIdReSchedule = meetingSchemaObj.extend({
   reason:z.string().optional().nullable(),
 })

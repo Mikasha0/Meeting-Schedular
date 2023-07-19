@@ -5,16 +5,11 @@ import { useState } from "react";
 import MeetingCancelButton from "./MeetingCancelButton";
 const { getIncreasedTime } = require("~/utils/increasedDate");
 
-
-
 export default function Booking({ data }: any) {
   const navigate = useNavigate();
   const increasedTime = getIncreasedTime(data.time);
   const [showCancelField, setShowCancelField] = useState(false);
 
-  const showFiled = () => {
-    setShowCancelField(!showCancelField);
-  };
 
   return (
     // <Form>
@@ -48,7 +43,7 @@ export default function Booking({ data }: any) {
           <div className="font-semibold">When</div>
           <div className="col-span-2 mt-2 mb-6 text-gray-800">
             <div key={data.id}>
-              {format(new Date(data.date), "EEEE, MMMM d, yyyy")}
+              {format(new Date(data.newDate?data.newDate:data.date), "EEEE, MMMM d, yyyy")}
               <br />
               {data.time} - {increasedTime}
             </div>
@@ -95,7 +90,10 @@ export default function Booking({ data }: any) {
             Reschedule
           </button>
           or{" "}
-  <MeetingCancelButton showCancelField={showCancelField} setShowCancelField={setShowCancelField}/>
+          <MeetingCancelButton
+            showCancelField={showCancelField}
+            setShowCancelField={setShowCancelField}
+          />
         </p>
       </div>
     </div>
