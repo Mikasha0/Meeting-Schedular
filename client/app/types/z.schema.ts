@@ -62,9 +62,12 @@ export const meetingSchemaObj = z.object({
     .optional()
     .nullable(),
 });
-const meetingSchema = meetingSchemaObj.refine((schema) => {
-  return schema.guests?.includes(schema.email), { message: "Hi bro" };
-});
+export const meetingSchema = meetingSchemaObj.refine(
+  (schema) => !schema.guests || !schema.guests.includes(schema.email),
+  {
+    message: "The organizer's email should not be included in the guests list",
+  },
+);
 
 export const MeetingIdReSchedule = meetingSchemaObj.extend({
   reason:z.string().optional().nullable(),

@@ -32,6 +32,7 @@ import {
   MeetingIdReSchedule,
   Weekday,
   colStartClasses,
+  meetingSchema,
   meetingSchemaObj,
 } from "~/types/z.schema";
 import { getMeetingFormData } from "~/utils/formUtils";
@@ -161,7 +162,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
   console.log(date)
   const reschedule = params.get("reschedule");
   console.log(reschedule);
-  const parseResult = meetingSchemaObj.safeParse({
+  const parseResult = meetingSchema.safeParse({
     time,
     email,
     date,
@@ -174,7 +175,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
   
   if (!parseResult.success) {
     const fieldErrors = parseResult.error.format();
-    console.log(JSON.stringify(fieldErrors));
+    console.log(JSON.stringify(fieldErrors._errors[1]));
 
     return badRequest({
       fieldErrors,
@@ -195,6 +196,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
     });
     console.log(parseResult.data)
     const data = await response.json();
+    console.log(meetingSchema)
     console.log(data);
     console.log(data.notes);
 

@@ -55,6 +55,16 @@ export default function AddGuest({setShowInput, showInput, actionData}:AddGuests
             {actionData.fieldErrors.guests[0]._errors[0]}
           </p>
         ) : null}
+         {actionData?.fieldErrors?._errors ? (
+          <p
+            className="form-validation-error"
+            style={{ color: "red" }}
+            role="alert"
+            id="name-error"
+          >
+            {actionData.fieldErrors._errors[0]}
+          </p>
+        ) : null}
       </>
     )}
   </>  )
