@@ -14,7 +14,7 @@ export default function MeetingCancelButton({
       </button>
       {showCancelField ? (
         <>
-        <Form>
+        <Form method="post">
           <textarea
             id="message"
             name="cancel"
