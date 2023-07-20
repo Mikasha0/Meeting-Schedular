@@ -14,7 +14,7 @@ export default function MeetingTimes({
   setVisible,
   visible,
 }: MeetingTimesProps) {
-
+  
   const handleMeetingNavigation = (time: React.Key | null) => {
     const currentDate = startOfToday();
     let selectedDate = new Date(selectedDay);
@@ -35,7 +35,7 @@ export default function MeetingTimes({
       setVisible(!visible);
     }
   };
-  
+
   return (
     <section className="mt-12 md:mt-0 md:pl-8 md:pr-12 pt-5 pb-5 scrollable">
       <div className="date-time flex justify-between">

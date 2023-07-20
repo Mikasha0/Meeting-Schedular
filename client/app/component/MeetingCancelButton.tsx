@@ -13,7 +13,7 @@ export default function MeetingCancelButton({
       >
         Cancel
       </button>
-      {showCancelField ? (
+      {showCancelField && (
         <>
         <Form method="post">
           <textarea
@@ -33,8 +33,6 @@ export default function MeetingCancelButton({
           </div>
           </Form>
         </>
-      ) : (
-        ""
       )}
     </>
   );
