@@ -71,3 +71,7 @@ body {
     width: 550px;
     overflow-x: hidden;
 }
+
+.meeting-time-button{
+    width: 230px;
+}

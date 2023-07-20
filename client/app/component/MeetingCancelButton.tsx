@@ -1,9 +1,10 @@
 import { Form } from "@remix-run/react";
+import { MeetingCancelButtonProps } from "~/types/meeting-cancel-button.types";
 
 export default function MeetingCancelButton({
   setShowCancelField,
   showCancelField,
-}: any) {
+}: MeetingCancelButtonProps) {
   return (
     <>
       <button

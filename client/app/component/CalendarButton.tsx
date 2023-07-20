@@ -39,8 +39,8 @@ export default function CalendarButton({
         (isEqual(day, selectedDay) || isToday(day)) && "font-semibold",
         "mx-auto flex button-size items-center justify-center rounded-lg",
         (isSaturday || isSunday) &&
-          "pointer-events-none button-background-disabled", // Disable Saturdays and Sundays except for the current date
-        day <= currentDate && "pointer-events-none button-background-disabled" // Disable past dates except for the current date
+          "pointer-events-none button-background-disabled", 
+        day <= currentDate && "pointer-events-none button-background-disabled" 
       )}
     >
       <time dateTime={format(day, "yyyy-MM-dd")}>{format(day, "d")}</time>

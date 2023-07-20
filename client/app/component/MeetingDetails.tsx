@@ -1,11 +1,10 @@
-import yarsa_cube from "~/images/yarsa-cube-grey.svg";
+import { LinksFunction } from "@remix-run/node";
+import { format } from "date-fns";
 import { AiOutlineCalendar, AiOutlineClockCircle } from "react-icons/ai";
 import { CiLocationOn } from "react-icons/ci";
-import { BsCalendarDate } from "react-icons/bs";
-import { format, parseISO, addMinutes } from "date-fns";
-import { MeetingDetailsProp } from "~/types/meeting-details.types";
+import yarsa_cube from "~/images/yarsa-cube-grey.svg";
 import stylesheet from "~/styles/meeting.css";
-import { LinksFunction } from "@remix-run/node";
+import { MeetingDetailsProp } from "~/types/meeting-details.types";
 const { getIncreasedTime } = require("~/utils/increasedDate");
 
 export const links: LinksFunction = () => [
@@ -15,7 +14,6 @@ export const links: LinksFunction = () => [
 export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
   const originalTime = data.time;
   const newTime = data.newTime;
-
   const increasedOriginalTime = getIncreasedTime(originalTime);
   const increasedNewTime = getIncreasedTime(newTime);
 
@@ -40,15 +38,13 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
           </div>
         </div>
       </div>
-      {data.oldTime ? (
+      {data.oldTime && (
         <div className="relative z-10 max-w-full break-words mb-3 text-sm flex line-cut">
           <AiOutlineCalendar size={18} className="mr-2 " />{" "}
           {format(new Date(data.oldDate), "EEE, MMMM d, yyyy")}
           <br />
           {data.oldTime} -{increasedOriginalTime}
         </div>
-      ) : (
-        ""
       )}
 
       {visible && (
@@ -59,7 +55,7 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
             "EEE, MMMM d, yyyy"
           )}
           <br />
-          {data.id ? data.newTime : data.time} -{" "}
+          {data.id ? data.newTime : data.time} - 
           {data.id ? increasedNewTime : increasedOriginalTime}
         </div>
       )}
