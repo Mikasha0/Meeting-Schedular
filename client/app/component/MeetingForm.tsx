@@ -13,10 +13,6 @@ export default function MeetingForm({
   selectedLocation,
 }: MeetingFormProps) {
   const [showInput, setShowInput] = useState(false);
-  const getEvent = () => {
-    console.log(EventActions.CREATE);
-    return data.id ? EventActions.CREATE : EventActions.RESCHEDULE;
-  };
   return (
     <section className="mt-12 md:mt-0 md:pl-6 pt-5 pb-5">
       <Form method="post">
@@ -94,21 +90,20 @@ export default function MeetingForm({
             ""
           )}
           <div className="flex justify-between ">
-             <button
-                type="button"
-                onClick={toggleVisibility}
-
-                className="text-gray-900 mt-4 bg-white border border-gray-300  focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                >
-                Back
-              </button>
+            <button
+              type="button"
+              onClick={toggleVisibility}
+              className="text-gray-900 mt-4 bg-white border border-gray-300  focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            >
+              Back
+            </button>
             {!data.id ? (
               <button
                 type="submit"
                 name="_action"
                 value="CREATE"
                 className="text-white mt-4 bg-gray-600 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-                >
+              >
                 Confirm
               </button>
             ) : (
@@ -116,7 +111,7 @@ export default function MeetingForm({
                 type="submit"
                 name="_action"
                 value="RESCHEDULE"
-                className="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-400 hover:text-white focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-white dark:text-black dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                className="text-white mt-4 bg-gray-600 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
               >
                 Reschedule
               </button>

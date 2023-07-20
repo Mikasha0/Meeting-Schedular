@@ -26,7 +26,7 @@ export default function index() {
         Book your time at our Pokhara or Kathmandu offices.
       </p>
       <div
-        className=" rounded-lg shadow-lg p-4 mt-7  bg-white card-dimension hover:bg-gray-200 pointer"
+        className=" rounded-lg shadow-lg p-4 mt-7  bg-white card-dimension hover:bg-gray-200 cursor-pointer"
         onClick={() => navigate("/meeting")}
       >
         <h2 className="text-sm font-semibold pr-2 text-emphasis mt-2">
@@ -35,7 +35,7 @@ export default function index() {
         <p className="text-sm pr-2 text-subtle mt-3">A 30 minutes meeting.</p>
         <ul className="mt-2 flex flex-wrap gap-x-2 gap-y-1 mb-2">
           <li>
-            <div className="font-medium inline-flex bg-gray-100 items-center justify-center rounded gap-x-1 bg-subtle text-emphasis py-1 px-1.5 text-xs leading-3 text-white">
+          <div className="font-medium inline-flex items-center justify-center rounded gap-x-1 bg-subtle text-emphasis py-1 px-1.5 text-xs leading-3 text-white cursor-pointer hover:bg-opacity-80">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="28"

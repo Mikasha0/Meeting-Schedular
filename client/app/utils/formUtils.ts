@@ -12,16 +12,6 @@ export function getMeetingFormData(form: FormData) {
     };
   }
   
-  export const getNonHoliday = (currentDay: Date):Date => {
-    const nextDate = new Date(currentDay)
-    nextDate.setDate(currentDay.getDate()+ 1)
-    const day = Weekday[nextDate.getDay()]
-    if(holidays.includes(day)){
-      return getNonHoliday(nextDate)
-    }
-    return nextDate;
-    
-  }
 
 
 
