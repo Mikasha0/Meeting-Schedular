@@ -12,7 +12,6 @@ export default function Booking({ data }: any) {
 
 
   return (
-    // <Form>
     <div className="min-h-screen bg-gray-100 py-8">
       <div
         className="max-w-md mx-auto sm:p-6 md:max-w-4xl md:p-8 rounded-lg border border-gray-300 bg-white"
@@ -79,7 +78,7 @@ export default function Booking({ data }: any) {
           )}
         </div>
         <hr className="mt-7" />
-        <p className="text-default mt-7 text-center">
+        <div className="text-default mt-7 text-center">
           Need to make a change?{" "}
           <button
             className="underline text-black mr-2"
@@ -94,7 +93,7 @@ export default function Booking({ data }: any) {
             showCancelField={showCancelField}
             setShowCancelField={setShowCancelField}
           />
-        </p>
+        </div>
       </div>
     </div>
   );

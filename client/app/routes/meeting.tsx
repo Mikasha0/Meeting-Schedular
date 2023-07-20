@@ -252,11 +252,11 @@ function getNextBusinessDay() {
   return (
     <div className="min-h-screen bg-[#f3f4f6] pt-8">
       <div
-        className={`max-w-md px-4 mx-auto sm:px-7 md:max-w-4xl md:px-6 rounded-lg  ${
+        className={`max-w-md  mx-auto  md:max-w-4xl  rounded-lg ${
           visible === true ? "default-width" : "toggled-width"
         }`}
       >
-        <div className="flex flex-col md:flex-row sm:divide-x ">
+        <div className="flex flex-col md:flex-row sm:divide-x">
           <MeetingDetails data={data} visible={visible} />
           {!visible && (
             <Calendar

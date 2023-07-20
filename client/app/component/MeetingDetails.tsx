@@ -22,7 +22,7 @@ export default function MeetingDetails({ data, visible }: MeetingDetailsProp) {
   
   return (
     <section
-      className="mt-12 md:mt-0 md:mr-3 pt-5 meet-det-dimension"
+      className="px-4 md:px-7 sm:px-6 mt-12 md:mt-0 md:mr-3 pt-5 meet-det-dimension"
     >
       <img
         src={yarsa_cube}
