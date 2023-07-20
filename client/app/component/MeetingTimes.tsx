@@ -19,12 +19,9 @@ export default function MeetingTimes({
       <div className="date-time flex justify-between">
         <h2 className="font-semibold text-black">
           <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
-            {format(selectedDay, "eee dd")}
+            {format(selectedDay, "EEEE, dd MMMM")}
           </time>
         </h2>
-        <kbd className="px-2 py-1.5 text-xs font-semibold text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
-          24h
-        </kbd>
       </div>
 
       {timeValues.map((time) => (

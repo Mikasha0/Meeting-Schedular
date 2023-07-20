@@ -20,10 +20,7 @@ export enum ACCEPTED_TIME {
   "12:30" = "12:30",
   "13:00" = "13:00",
   "13:30" = "13:30",
-  "14:00" = "14:00",
-  "14:30" = "14:30",
-  "15:00" = "15:00",
-  "15:30" = "15:30"
+  "14:00" = "14:00"
 }
 
 export const colStartClasses = [
@@ -66,16 +63,16 @@ export const meetingSchema = meetingSchemaObj.refine(
   (schema) => !schema.guests || !schema.guests.includes(schema.email),
   {
     message: "The organizer's email should not be included in the guests list",
-  },
+  }
 );
 
 export const cancelSchemaObj = z.object({
-  cancel: z.string().optional().nullable()
-})
+  cancel: z.string().optional().nullable(),
+});
 
 export const MeetingIdReSchedule = meetingSchemaObj.extend({
-  reason:z.string().optional().nullable(),
-})
+  reason: z.string().optional().nullable(),
+});
 export const createMeetingSchemaID = meetingSchemaObj.extend({
   id: z.string(),
 });

@@ -11,13 +11,13 @@ export default function index() {
   return (
     <main className="min-h-screen  flex flex-col items-center bg-[#f3f4f6]">
       <div className="text-white mt-28 ">
-        <div className="logo-container bg-gray-300 yarsa-logo">
+        <a href="/" className="block">
           <img
             src={yarsa_cube}
             alt="yarsa-logo-img"
             className="yarsa-logo-img"
           />
-        </div>
+        </a>
       </div>
       <div className="font-col text-emphasis text-3xl mb-1 font-bold">
         Yarsa Labs
@@ -26,7 +26,7 @@ export default function index() {
         Book your time at our Pokhara or Kathmandu offices.
       </p>
       <div
-        className=" rounded-lg shadow-lg p-4 mt-7  bg-white card-dimension"
+        className=" rounded-lg shadow-lg p-4 mt-7  bg-white card-dimension hover:bg-gray-200 pointer"
         onClick={() => navigate("/meeting")}
       >
         <h2 className="text-sm font-semibold pr-2 text-emphasis mt-2">

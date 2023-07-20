@@ -4,7 +4,7 @@ export default function RadioButtons({handleRadioChange, selectedLocation}:Radio
   return (
     <>
              <label className="block mt-3 mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                    Location
+                    Location *
                   </label>
                   <div className="flex items-center mb-2">
                     <input
@@ -20,7 +20,7 @@ export default function RadioButtons({handleRadioChange, selectedLocation}:Radio
                       htmlFor="Video_Call"
                       className="block ml-2 text-sm text-gray-600 "
                     >
-                      Video Call (Virtual Meeting)
+                      Video Call (Yarsa Meet)
                     </label>
                   </div>
                   <div className="flex items-center mb-2">
@@ -39,7 +39,7 @@ export default function RadioButtons({handleRadioChange, selectedLocation}:Radio
                       htmlFor="YLO_Kathmandu"
                       className="block ml-2 text-sm text-gray-600"
                     >
-                      YLO, Kathmandu (Physical Visit)
+                      Yarsa Labs, Kathmandu (Office Visit)
                     </label>
                   </div>
                   <div className="flex items-center mb-4">
@@ -58,7 +58,7 @@ export default function RadioButtons({handleRadioChange, selectedLocation}:Radio
                       htmlFor="YLO_Pokhara"
                       className="block ml-2 text-sm text-gray-600"
                     >
-                      YLO, Pokhara (Physical Visit)
+                      Yarsa Labs, Pokhara (Office Visit)
                     </label>
                   </div>
     </>
