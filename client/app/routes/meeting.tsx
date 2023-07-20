@@ -115,7 +115,7 @@ export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
     const data = await response.json();;
 
     return redirect(
-      `/booking/?bookingId=${data.id}/&reason=${data.reason}/&newDate=${date}`
+      `/booking/?bookingId=${data.id}/&reason=${data.reason}&newDate=${date}`
     );
   } catch (error) {
     return new Response("API request error", { status: 500 });

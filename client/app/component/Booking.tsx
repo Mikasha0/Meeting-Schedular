@@ -1,8 +1,9 @@
-import { Form, useNavigate } from "@remix-run/react";
+import { useNavigate } from "@remix-run/react";
 import { BsCheckCircleFill } from "react-icons/bs";
 import { format } from "date-fns";
 import { useState } from "react";
 import MeetingCancelButton from "./MeetingCancelButton";
+
 const { getIncreasedTime } = require("~/utils/increasedDate");
 
 export default function Booking({ data }: any) {
@@ -59,22 +60,18 @@ export default function Booking({ data }: any) {
           </div>
           <div className="mt-2 font-semibold">Where</div>
           <div className="col-span-2 mt-2 text-gray-800">{data.location}</div>
-          {data.notes ? (
+          {data.notes &&(
             <>
               <div className="mt-2 font-semibold">Notes</div>
               <div className="col-span-2 mt-2 text-gray-800">{data.notes}</div>
             </>
-          ) : (
-            ""
           )}
 
-          {data.reason ? (
+          {data.reason && (
             <>
               <div className="mt-2 font-semibold">Reason for Reschedule</div>
               <div className="col-span-2 mt-2 text-gray-800">{data.reason}</div>
             </>
-          ) : (
-            ""
           )}
         </div>
         <hr className="mt-7" />

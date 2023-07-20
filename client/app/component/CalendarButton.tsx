@@ -10,8 +10,6 @@ export default function CalendarButton({
   classNames,
 }: CalendarButtonProp) {
   const currentDate = startOfToday();
-  const nextDay = startOfToday();
-  nextDay.setDate(day.getDate() + 3);
 
   return (
     <button
