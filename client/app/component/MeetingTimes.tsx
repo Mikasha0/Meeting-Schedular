@@ -23,7 +23,6 @@ export default function MeetingTimes({
     const day1 = selectedDay.getDate();
     const date = year + "/" + month + "/" + day1;
     if (data.id) {
-      console.log(data.id);
       navigate(`/meeting/?reschedule=${data.id}/&time=${time}&date=${date}`);
       setVisible(!visible);
     } else if (selectedDate <= currentDate) {

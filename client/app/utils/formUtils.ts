@@ -6,9 +6,9 @@ export function getMeetingFormData(form: FormData) {
       name: form.get('name') as string,
       email: form.get('email') as string,
       location: form.get('location') as string,
-      notes: form.get('notes'),
+      notes: form.get('notes') as string, 
       guests: guestList ?[guestList]: null,
-      reason:form.get("reason")
+      reason:form.get("reason") as string,
     };
   }
   
