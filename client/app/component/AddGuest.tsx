@@ -11,11 +11,15 @@ export default function AddGuest({
 }: AddGuestsProps) {
   const [inputFields, setInputFields] = useState<{ id: string }[]>([]);
 
-  const addInputField = () => {
+  const addGuestInputField = () => {
     setInputFields([
       ...inputFields,
       { id: `email-input-${inputFields.length}` },
     ]);
+  };
+
+  const removeGuestInputField = (idToRemove:string) => {
+    setInputFields(inputFields.filter((input) => input.id !== idToRemove));
   };
 
   return (
@@ -46,7 +50,11 @@ export default function AddGuest({
             </div>
           </div>
 
-         <MultipleGuestsInput inputFields={inputFields} addInputField={addInputField}/>
+          <MultipleGuestsInput
+            inputFields={inputFields}
+            addGuestInputField={addGuestInputField}
+            removeGuestInputField={removeGuestInputField}
+          />
 
           {actionData?.fieldErrors?.guests ? (
             <p
