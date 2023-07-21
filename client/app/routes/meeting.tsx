@@ -126,6 +126,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const { name, email, location, notes, guests, reason } =
     getMeetingFormData(form);
+  console.log(JSON.stringify(form))
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
@@ -139,6 +140,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
     guests,
     reason,
   });
+  console.log(parseResult)
 
   if (!parseResult.success) {
     const fieldErrors = parseResult.error.format();
@@ -187,7 +189,7 @@ export default function Meeting() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f3f4f6] pt-8">
+    <div className="min-h-screen bg-[#f3f4f6] pt-8 pb-4">
       <div
         className={`max-w-md  mx-auto  md:max-w-4xl  rounded-lg ${
           visible === true ? "default-width" : "toggled-width"
