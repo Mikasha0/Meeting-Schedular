@@ -2,8 +2,7 @@ import {
   ActionArgs,
   LinksFunction,
   LoaderArgs,
-  json,
-  redirect,
+  json
 } from "@remix-run/node";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import {
@@ -14,19 +13,18 @@ import Calendar from "~/component/Calendar";
 import MeetingDetails from "~/component/MeetingDetails";
 import MeetingForm from "~/component/MeetingForm";
 import MeetingTimes from "~/component/MeetingTimes";
+import { createMeetingAction } from "~/actions/createMeeting";
+import { rescheduleMeetingAction } from "~/actions/rescheduleMeeting";
 import stylesheet from "~/styles/meeting.css";
 import {
   ACCEPTED_TIME,
   CreateMeetingDto,
-  MeetingIdReSchedule,
   Weekday,
-  colStartClasses,
-  meetingSchema,
+  colStartClasses
 } from "~/types/z.schema";
 import { useCurrentMonth } from "~/utils/CalendarUtils";
-import { getMeetingFormData } from "~/utils/formUtils";
-import { getNextBusinessDay } from "~/utils/nextBusinessDay";
-import { badRequest } from "~/utils/request.server";
+import { getNextBusinessDay } from "~/utils/nextBusinessDay"
+// import { loader } from "~/loaders/getMeetings";
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
 ];
@@ -62,6 +60,7 @@ export const loader = async ({ request }: LoaderArgs) => {
   return json({ date, time });
 };
 
+
 export async function action(args: ActionArgs) {
   const formData = await args.request.clone().formData();
   const _action = formData.get("_action");
@@ -74,98 +73,7 @@ export async function action(args: ActionArgs) {
   throw new Error("Unknown action");
 }
 
-export const rescheduleMeetingAction = async ({ request }: ActionArgs) => {
-  const form = await request.formData();
-  const { name, email, location, notes, guests, reason } =
-    getMeetingFormData(form);
-  const params = new URLSearchParams(request.url.split("?")[1]);
-  const time = params.get("time");
-  const date = params.get("date");
-  const reschedule = params.get("reschedule");
-  const parseResult = MeetingIdReSchedule.safeParse({
-    time,
-    email,
-    date,
-    name,
-    location,
-    notes: notes === "" ? null : notes,
-    guests,
-    reason,
-  });
 
-  if (!parseResult.success) {
-    const fieldErrors = parseResult.error.format();
-    return badRequest({
-      fieldErrors,
-      fields: null,
-      formError: "Form not submitted correctly",
-    });
-  }
-
-  const API_URL = `http://localhost:3333/api/meeting/${reschedule}`;
-
-  try {
-    const response = await fetch(API_URL, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(parseResult.data),
-    });
-    const data = await response.json();;
-
-    return redirect(
-      `/booking/?bookingId=${data.id}/&reason=${data.reason}&newDate=${date}`
-    );
-  } catch (error) {
-    return new Response("API request error", { status: 500 });
-  }
-};
-
-export const createMeetingAction = async ({ request }: ActionArgs) => {
-  const form = await request.formData();
-  const { name, email, location, notes, guests, reason } =
-    getMeetingFormData(form);
-  console.log(JSON.stringify(form))
-  const params = new URLSearchParams(request.url.split("?")[1]);
-  const time = params.get("time");
-  const date = params.get("date");
-  const parseResult = meetingSchema.safeParse({
-    time,
-    email,
-    date,
-    name,
-    location,
-    notes: notes === "" ? null : notes,
-    guests,
-    reason,
-  });
-  console.log(parseResult)
-
-  if (!parseResult.success) {
-    const fieldErrors = parseResult.error.format();
-    return badRequest({
-      fieldErrors,
-      fields: null,
-      formError: "Form not submitted correctly",
-    });
-  }
-  const API_URL = "http://localhost:3333/api/meeting";
-
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(parseResult.data),
-    });
-    const data = await response.json();
-    return redirect(`/booking/?bookingId=${data.id}`);
-  } catch (error) {
-    return new Response("API request error", { status: 500 });
-  }
-};
 
 export default function Meeting() {
   const navigate = useNavigate();
