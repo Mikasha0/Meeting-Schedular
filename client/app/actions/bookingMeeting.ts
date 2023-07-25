@@ -19,7 +19,7 @@ export const action = async ({ request }: ActionArgs) => {
         formError: "Form not submitted correctly",
       });
     }
-    const API_URL = `http://localhost:3333/api/meeting/${bookingId}`;
+    const API_URL = `${process.env.API_URL}/${bookingId}`;
   
     try {
       const response = await fetch(API_URL, {

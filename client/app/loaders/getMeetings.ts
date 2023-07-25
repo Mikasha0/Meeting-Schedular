@@ -2,14 +2,13 @@ import { LoaderArgs, LoaderFunction, json } from "@remix-run/node";
 
 export const loader:LoaderFunction = async ({ request }: LoaderArgs) => {
   const url = new URL(request.url);
-  console.log("ajfasdf")
   const rescheduleId = url.searchParams.get("reschedule");
   const time = url.searchParams.get("time");
   const date = url.searchParams.get("date") ?? new Date();
 
   if (rescheduleId) {
     const res = await fetch(
-      `http://localhost:3333/api/meeting/${rescheduleId}`
+      `${process.env.API_URL}/${rescheduleId}`
     );
     const newFormattedDate = new Date(date).toLocaleDateString("en-US", {
       weekday: "long",
