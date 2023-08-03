@@ -1,0 +1,11 @@
+FROM node:18.16.0-alpine3.18 as base  
+FROM base as deps 
+WORKDIR /app/cal_clone
+COPY package.json ./
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
+    PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
+RUN npm i --legacy-peer-deps
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "run", "start"]

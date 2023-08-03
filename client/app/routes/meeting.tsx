@@ -1,7 +1,7 @@
 import {
   ActionArgs,
   LinksFunction,
-  LoaderArgs
+  LoaderArgs,
 } from "@remix-run/node";
 import { useActionData, useLoaderData, useNavigate } from "@remix-run/react";
 import {

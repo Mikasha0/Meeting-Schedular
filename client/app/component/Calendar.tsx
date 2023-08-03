@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
+import {BsChevronLeft, BsChevronRight} from 'react-icons/bs'
 import CalendarButton from "./CalendarButton";
 import { format } from "date-fns";
 
@@ -26,7 +26,7 @@ export default function Calendar({
           className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
         >
           <span className="sr-only">Previous month</span>
-          <ChevronLeftIcon className="w-5 h-5" aria-hidden="true" />
+          <BsChevronLeft className="w-5 h-5" aria-hidden="true" />
         </button>
         <button
           onClick={nextMonth}
@@ -34,7 +34,7 @@ export default function Calendar({
           className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
         >
           <span className="sr-only">Next month</span>
-          <ChevronRightIcon className="w-5 h-5" aria-hidden="true" />
+          <BsChevronRight className="w-5 h-5" aria-hidden="true" />
         </button>
       </div>
       <div className="grid grid-cols-7 mt-10 text-xs leading-6 text-center text-gray-500">

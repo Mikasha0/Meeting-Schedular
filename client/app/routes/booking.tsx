@@ -1,4 +1,4 @@
-import { ActionArgs, LoaderArgs } from "@remix-run/node";
+import { ActionArgs, LoaderArgs, V2_MetaFunction } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { action as bookingMeeting } from "~/actions/bookingMeeting";
 import Booking from "~/component/Booking";
