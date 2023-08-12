@@ -28,7 +28,7 @@ export default function MeetingForm({
             className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             style={{ width: "370px" }}
             defaultValue={actionData?.fields?.name || data.name}
-            readOnly={data.name ? true : false}
+            readOnly={!!data.name}
             required
           />
           {actionData?.fieldErrors?.name ? (
@@ -53,7 +53,7 @@ export default function MeetingForm({
             id="small-input"
             className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             defaultValue={actionData?.fields?.email || data.email}
-            readOnly={data.email ? true : false}
+            readOnly={!!data.email}
             required
           />
           {actionData?.fieldErrors?.email ? (
