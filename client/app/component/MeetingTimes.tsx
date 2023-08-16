@@ -14,7 +14,6 @@ export default function MeetingTimes({
   setVisible,
   visible,
 }: MeetingTimesProps) {
-  
   const handleMeetingNavigation = (time: React.Key | null) => {
     const currentDate = startOfToday();
     let selectedDate = new Date(selectedDay);
@@ -36,7 +35,7 @@ export default function MeetingTimes({
   };
 
   return (
-    <section className="mt-12 md:mt-0 md:pl-8 md:pr-12 pt-5 pb-5 scrollable">
+    <section className="min-w-[280px] met-time-sec mt-12 md:mt-0 md:pl-8 md:pr-12 pt-5 pb-5 ">
       <div className="date-time flex justify-between">
         <h2 className="font-semibold text-black">
           <time dateTime={format(selectedDay, "yyyy-MM-dd")}>
@@ -44,19 +43,20 @@ export default function MeetingTimes({
           </time>
         </h2>
       </div>
-
-      {timeValues.map((time) => (
-        <button
-          key={time}
-          type="button"
-          className="meeting-time-button text-black flex justify-center hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
-          onClick={() => {
-            handleMeetingNavigation(time);
-          }}
-        >
-          {time}
-        </button>
-      ))}
+      <div className="met-time ">
+        {timeValues.map((time) => (
+          <button
+            key={time}
+            type="button"
+            className=" meeting-time-button text-black flex justify-center hover:text-white border border-gray-300 hover:bg-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-0 mt-3"
+            onClick={() => {
+              handleMeetingNavigation(time);
+            }}
+          >
+            {time}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }

@@ -70,13 +70,13 @@ export default function Meeting() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f3f4f6] pt-8 pb-4">
+    <div className="min-h-screen bg-[#f3f4f6] md:pt-8 md:pb-4">
       <div
         className={`max-w-md  mx-auto  md:max-w-4xl  rounded-lg ${
           visible === true ? "default-width" : "toggled-width"
         }`}
       >
-        <div className="flex flex-col md:flex-row md:divide-x">
+        <div className="col flex flex-col md:flex-row md:divide-x">
           <MeetingDetails data={data} visible={visible} />
           {!visible && (
             <Calendar
