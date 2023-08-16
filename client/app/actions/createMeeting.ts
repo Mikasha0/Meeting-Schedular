@@ -7,7 +7,7 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
   const form = await request.formData();
   const { name, email, location, notes, guests, reason } =
     getMeetingFormData(form);
-  
+
   const params = new URLSearchParams(request.url.split("?")[1]);
   const time = params.get("time");
   const date = params.get("date");
@@ -31,16 +31,18 @@ export const createMeetingAction = async ({ request }: ActionArgs) => {
     });
   }
   const API_URL = `${process.env.API_URL}`;
-  
 
   try {
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",  
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(parseResult.data),
     });
+    if (response.status === 500) {
+      return redirect("/error");
+    }
     const data = await response.json();
     return redirect(`/booking/?bookingId=${data.id}`);
   } catch (error) {

@@ -1,6 +1,8 @@
-import {BsChevronLeft, BsChevronRight} from 'react-icons/bs'
-import CalendarButton from "./CalendarButton";
 import { format } from "date-fns";
+import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
+import { calendarTypes } from '~/types/calendar.types';
+import CalendarButton from "./CalendarButton";
+
 
 export default function Calendar({
   firstDayCurrentMonth,
@@ -13,7 +15,7 @@ export default function Calendar({
   colStartClasses,
   setSelectedDay,
   selectedDay,
-}: any) {
+}:calendarTypes ) {
   return (
     <div className="md:pr-4 md:pl-4 pt-5 pb-3 calendar-dimension">
       <div className="flex items-center">
