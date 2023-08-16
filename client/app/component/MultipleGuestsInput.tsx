@@ -1,10 +1,13 @@
 import { BsPerson } from "react-icons/bs";
+import { MultipleGuestsInputType } from "~/types/multipleGuestsInput.types";
+
+
 
 export default function MultipleGuestsInput({
   inputFields,
   addGuestInputField,
   removeGuestInputField
-}: any) {
+}: MultipleGuestsInputType) {
   return (
     <>
       {inputFields.map((field: any) => (

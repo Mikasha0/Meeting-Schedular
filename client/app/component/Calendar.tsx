@@ -3,7 +3,6 @@ import { BsChevronLeft, BsChevronRight } from 'react-icons/bs';
 import { calendarTypes } from '~/types/calendar.types';
 import CalendarButton from "./CalendarButton";
 
-
 export default function Calendar({
   firstDayCurrentMonth,
   previousMonth,

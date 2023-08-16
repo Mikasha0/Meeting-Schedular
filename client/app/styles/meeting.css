@@ -21,6 +21,24 @@ body {
     border: 1px solid #e5e7eb;
 }
 
+.default-width {
+    max-width: 700px;
+    width: 100%;
+    background-color: #fff;
+    box-sizing: border-box;
+    border: 1px solid #e5e7eb;
+ 
+}
+
+@media (max-width: 770px) {
+    .default-width {
+        width: 80%;
+        display: flex; 
+        justify-content: center; /* Ensure the element occupies the full width */
+    }
+}
+
+
 .toggled-width {
     max-width: 1050px;
     width: 100%;

@@ -25,7 +25,7 @@ export default function MeetingForm({
           <input
             type="text"
             name="name"
-            className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            className="block p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             style={{ width: "370px" }}
             defaultValue={actionData?.fields?.name || data.name}
             readOnly={!!data.name}
@@ -52,6 +52,7 @@ export default function MeetingForm({
             name="email"
             id="small-input"
             className="block w-full p-2 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            style={{ width: "370px" }}
             defaultValue={actionData?.fields?.email || data.email}
             readOnly={!!data.email}
             required
@@ -77,6 +78,7 @@ export default function MeetingForm({
             id="message"
             name={data.id ? "reason" : "notes"}
             className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-black dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            style={{ width: "370px" }}
             placeholder="Please share anything that will help prepare for our meeting"
           ></textarea>
           {!data.id && (

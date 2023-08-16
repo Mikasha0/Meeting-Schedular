@@ -22,11 +22,11 @@ export default function index() {
       <div className="font-col text-emphasis text-3xl mb-1 font-bold">
         Yarsa Labs
       </div>
-      <p className="text-gray-500 text-subtle text-sm">
+      <p className="text-gray-500 text-subtle text-sm w-[60%] text-center ">
         Book your time at our Pokhara or Kathmandu offices.
       </p>
       <div
-        className=" rounded-lg shadow-lg p-4 mt-7  bg-white card-dimension hover:bg-gray-200 cursor-pointer"
+        className="rounded-lg shadow-lg p-4 mt-7 bg-white hover:bg-gray-200 cursor-pointer w-[80%] md:w-[60%]"
         onClick={() => navigate("/meeting")}
       >
         <h2 className="text-sm font-semibold pr-2 text-emphasis mt-2">

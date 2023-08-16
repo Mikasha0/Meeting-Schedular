@@ -76,7 +76,7 @@ export default function Meeting() {
           visible === true ? "default-width" : "toggled-width"
         }`}
       >
-        <div className="flex flex-col md:flex-row sm:divide-x">
+        <div className="flex flex-col md:flex-row md:divide-x">
           <MeetingDetails data={data} visible={visible} />
           {!visible && (
             <Calendar
