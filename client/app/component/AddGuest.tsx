@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { GoPersonAdd } from "react-icons/go";
-import { BsPerson } from "react-icons/bs";
 import { AddGuestsProps } from "~/types/add-guest.types";
 import MultipleGuestsInput from "./MultipleGuestsInput";
 
@@ -49,11 +48,7 @@ export default function AddGuest({
             </div>
           </div>
 
-          <MultipleGuestsInput
-            inputFields={inputFields}
-            addGuestInputField={addGuestInputField}
-            removeGuestInputField={removeGuestInputField}
-          />
+        
 
           {actionData?.fieldErrors?.guests ? (
             <p
@@ -75,6 +70,11 @@ export default function AddGuest({
               {actionData.fieldErrors._errors[0]}
             </p>
           ) : null}
+            <MultipleGuestsInput
+            inputFields={inputFields}
+            addGuestInputField={addGuestInputField}
+            removeGuestInputField={removeGuestInputField}
+          />
         </>
       )}
     </>
