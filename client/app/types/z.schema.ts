@@ -33,6 +33,12 @@ export const colStartClasses = [
   "col-start-7",
 ];
 
+export enum btnTypes{
+  submit="submit", 
+  button="button",
+  reset="reset",
+}
+
 export const EventActions = {
   CREATE: "notes",
   RESCHEDULE: "reason",
