@@ -17,7 +17,7 @@ export default function AddGuest({
     ]);
   };
 
-  const removeGuestInputField = (idToRemove:string) => {
+  const removeGuestInputField = (idToRemove: string) => {
     setInputFields(inputFields.filter((input) => input.id !== idToRemove));
   };
 
@@ -48,8 +48,6 @@ export default function AddGuest({
             </div>
           </div>
 
-        
-
           {actionData?.fieldErrors?.guests ? (
             <p
               className="form-validation-error"
@@ -70,7 +68,7 @@ export default function AddGuest({
               {actionData.fieldErrors._errors[0]}
             </p>
           ) : null}
-            <MultipleGuestsInput
+          <MultipleGuestsInput
             inputFields={inputFields}
             addGuestInputField={addGuestInputField}
             removeGuestInputField={removeGuestInputField}

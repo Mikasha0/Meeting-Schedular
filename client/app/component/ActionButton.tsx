@@ -1,8 +1,8 @@
 interface ActionButtonType{
     btnName:string,
     value:string
-
 }
+
 export default function ActionButton({btnName, value }:ActionButtonType) {
   return (
     <button
