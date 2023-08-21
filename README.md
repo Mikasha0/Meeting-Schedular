@@ -2,7 +2,7 @@
 
 ## Description
 
-A basic meeting scheduler app that lets you schedule meetings.
+A meeting schedular app that lets users set up meeting by sending emails and also has cancel meeting feature by sending mail.
 
 ## Development
 
