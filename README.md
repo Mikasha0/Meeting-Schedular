@@ -2,14 +2,7 @@
 
 ## Description
 
-A basic meeting scheduler server with nest, prisma, postgresql, zod, docker and nodemailer.
-It lets users set up meeting by sending emails and also has cancel meeting feature by sending mail.
-CRUD endpoints are available at /api. By defaul swagger-ui should be located at
-http://localhost:3333/api
-
-# Welcome to Remix!
-
-- [Remix Docs](https://remix.run/docs)
+A basic meeting scheduler app that lets you schedule meetings.
 
 ## Development
 
